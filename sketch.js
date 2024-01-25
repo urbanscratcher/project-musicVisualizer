@@ -1,42 +1,43 @@
 // [Global Variables] -----------------------------------
 // global for the controls and input
-var controls = null;
+let controls = null;
 // store visualisations in a container
-var vis = null;
+let vis = null;
 // variable for the p5 sound object
-var sound = null;
+let sound = null;
 // variable for p5 fast fourier transform
-var fourier;
+let fourier;
 
-// [PRE-LOAD] -------------------------------------------
-function preload() {
-  sound = loadSound("assets/stomper_reggae_bit.mp3");
-}
+// Create a new p5 instance with your sketch fn
+export const sketch = function (p5) {
+  p5.preload = function () {
+    sound = p5.loadSound("assets/stomper_reggae_bit.mp3");
+  };
 
-// [SETUP] ----------------------------------------------
-function setup() {
-  createCanvas(windowWidth, windowHeight);
-  background(0);
-  controls = new ControlsAndInput();
+  p5.setup = function () {
+    console.log("setup");
+    p5.createCanvas(p5.windowWidth, p5.windowHeight);
+    p5.background(0);
+    controls = new ControlsAndInput();
 
-  //instantiate the fft object
-  fourier = new p5.FFT();
+    //instantiate the fft object
+    fourier = new window.p5.FFT();
 
-  //create a new visualisation container and add visualisations
-  vis = new Visualisations();
-  vis.add(new Spectrum());
-  vis.add(new WavePattern());
-  vis.add(new Needles());
-}
+    //create a new visualisation container and add visualisations
+    vis = new Visualisations();
+    vis.add(new Spectrum());
+    vis.add(new WavePattern());
+    // vis.add(new Needles());
+  };
 
-// [DRAW] -----------------------------------------------
-function draw() {
-  background(0);
-  //draw the selected visualisation
-  vis.selectedVisual.draw();
-  //draw the controls on top.
-  controls.draw();
-}
+  p5.draw = function () {
+    p5.background(0);
+    //draw the selected visualisation
+    vis.selectedVisual.draw();
+    //draw the controls on top.
+    controls.draw();
+  };
+};
 
 // [GLOBAL EVENTS] ---------------------------------------
 function mouseClicked() {
