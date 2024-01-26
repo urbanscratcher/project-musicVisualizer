@@ -1,5 +1,5 @@
-import p5 from "../../index.js";
-import current from "../globals.js";
+import { p5 } from "../../index.js";
+import GlobalState from "../GlobalState.js";
 
 class Needles {
   constructor() {
@@ -29,7 +29,7 @@ class Needles {
   // draw the plots to the screen
   draw = () => {
     // create an array amplitude values from the fft.
-    current.fourier.analyze();
+    GlobalState.fourier.analyze();
 
     // iterator for selecting frequency bin.
     let currentBin = 0;
@@ -59,7 +59,7 @@ class Needles {
         this.ticks(x + w / 2, y + h, this.frequencyBins[currentBin]);
 
         // draw needle
-        const energy = current.fourier.getEnergy(
+        const energy = GlobalState.fourier.getEnergy(
           this.frequencyBins[currentBin]
         );
 

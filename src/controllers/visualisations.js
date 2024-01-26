@@ -1,5 +1,3 @@
-import current from "../globals.js";
-
 //container function for the visualisations
 class Visualisations {
   constructor() {}

@@ -2,7 +2,7 @@
  * managing global variables
  * @namespace
  */
-const current = {
+const globals = {
   /**
    * Global variable for controls and input manager
    * @type {ControlsAndInput|null}
@@ -16,16 +16,10 @@ const current = {
   vis: null,
 
   /**
-   * Variable for the p5 sound object to be loaded
-   * @type {P5.SoundFile|null}
-   */
-  sound: null,
-
-  /**
    * Variable for p5 Fast Fourier Transform object for frequency analysis
    * @type {P5.FFT|null}
    */
   fourier: null,
 };
 
-export default current;
+export const { controls, vis, fourier } = globals;

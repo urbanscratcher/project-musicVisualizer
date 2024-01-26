@@ -1,5 +1,5 @@
-import current from "../globals.js";
-import p5 from "../../index.js";
+import GlobalState from "../GlobalState.js";
+import { p5 } from "../../index.js";
 
 class Spectrum {
   constructor() {}
@@ -7,8 +7,10 @@ class Spectrum {
   name = "spectrum";
 
   draw = () => {
+    const { fourier } = GlobalState;
+
     p5.push();
-    let spectrum = current.fourier.analyze();
+    let spectrum = fourier.analyze();
     p5.noStroke();
     //fill(0,255,0)
     // for (var i = 0; i< spectrum.length; i++){

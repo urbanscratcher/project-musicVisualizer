@@ -1,6 +1,6 @@
-import current from "../globals.js";
 import PlaybackButton from "./playbackButton.js";
-import p5 from "../../index.js";
+import { p5 } from "../../index.js";
+import GlobalState from "../GlobalState.js";
 
 /**
  * @class
@@ -36,21 +36,22 @@ class ControlsAndInput {
 
   /**
    * responds to keyboard presses
-   * @param {number} keycode - the ascii code of the keypressed
+   * @param {number} key - the ascii code of the keypressed
    */
   keyPressed(key) {
     const keyCode = key.keyCode;
-    const spacebarKey = 32;
-    const zeroKey = 48;
-    const nineKey = 58;
-    if (keyCode === spacebarKey) {
+    const KEYCODE_SPACEBAR = 32;
+    const KEYCODE_0 = 48;
+    const KEYCODE_9 = 58;
+
+    if (keyCode === KEYCODE_SPACEBAR) {
       this.isMenuDisplayed = !this.isMenuDisplayed;
     }
 
-    if (keyCode > zeroKey && keyCode < nineKey) {
-      let visNumber = keyCode - zeroKey - 1;
+    if (keyCode > KEYCODE_0 && keyCode < KEYCODE_9) {
+      let visNumber = keyCode - KEYCODE_0 - 1;
 
-      const curVis = current.vis;
+      const curVis = GlobalState.vis;
       const curVisList = curVis.visuals;
       const selectedVis = curVisList[visNumber];
       const selectedVisName = curVisList[visNumber].name;
@@ -85,9 +86,10 @@ class ControlsAndInput {
    * @param {P5} - p5 instance
    */
   menu() {
-    for (let i = 0; i < current.vis.visuals.length; i++) {
+    console.log(GlobalState.vis);
+    for (let i = 0; i < GlobalState.vis.visuals.length; i++) {
       let yLoc = 70 + i * 40;
-      p5.text(i + 1 + ":  " + current.vis.visuals[i].name, 100, yLoc);
+      p5.text(i + 1 + ":  " + GlobalState.vis.visuals[i].name, 100, yLoc);
     }
   }
 }

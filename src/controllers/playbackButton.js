@@ -1,5 +1,5 @@
-import current from "../globals.js";
-import p5 from "../../index.js";
+import GlobalState from "../GlobalState.js";
+import { p5 } from "../../index.js";
 
 /**
  * @class
@@ -53,10 +53,10 @@ export default class PlaybackButton {
       p5.mouseY > this.y &&
       p5.mouseY < this.y + this.height
     ) {
-      if (current.sound.isPlaying()) {
-        current.sound.pause();
+      if (GlobalState.sound.isPlaying()) {
+        GlobalState.sound.pause();
       } else {
-        current.sound.loop();
+        GlobalState.sound.loop();
       }
       this.playing = !this.playing;
       return true;

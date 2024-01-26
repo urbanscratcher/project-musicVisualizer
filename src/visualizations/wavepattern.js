@@ -1,5 +1,5 @@
-import current from "../globals.js";
-import p5 from "../../index.js";
+import { p5 } from "../../index.js";
+import GlobalState from "../GlobalState.js";
 
 //draw the waveform to the screen
 class WavePattern {
@@ -16,7 +16,7 @@ class WavePattern {
 
     p5.beginShape();
     //calculate the waveform from the fft.
-    let wave = current.fourier.waveform();
+    let wave = GlobalState.fourier.waveform();
     for (let i = 0; i < wave.length; i++) {
       //for each element of the waveform map it to screen
       //coordinates and make a new vertex at the point.
