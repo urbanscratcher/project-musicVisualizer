@@ -1,0 +1,16 @@
+{
+  "recurseDepth": 10,
+  "source": {
+    "include": ["."],
+    "exclude": ["./lib", "./styles", "./jsdoc", "./index.js"]
+  },
+  "sourceType": "module",
+  "opts": {
+    "recurse": true,
+    "destination": "./jsdoc",
+    "encoding": "utf8",
+    "private": true,
+    "ignoreCompilerErrors": false,
+    "verbose": true
+  }
+}
