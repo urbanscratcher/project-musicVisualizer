@@ -1,8 +1,8 @@
 /**
- * Namespace for managing global variables
+ * managing global variables
  * @namespace
  */
-export const globals = {
+const current = {
   /**
    * Global variable for controls and input manager
    * @type {ControlsAndInput|null}
@@ -27,3 +27,5 @@ export const globals = {
    */
   fourier: null,
 };
+
+export default current;

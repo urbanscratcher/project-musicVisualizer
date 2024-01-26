@@ -1,4 +1,6 @@
-import { globals } from "../globals.js";
+import current from "../globals.js";
+import p5 from "../../index.js";
+
 /**
  * @class
  * @classdesc displays and handles clicks on the playback button.
@@ -18,7 +20,7 @@ export default class PlaybackButton {
   /**
    * @function
    */
-  draw = (p5) => {
+  draw = () => {
     if (this.playing) {
       p5.rect(this.x, this.y, this.width / 2 - 2, this.height);
       p5.rect(
@@ -44,17 +46,17 @@ export default class PlaybackButton {
    * @function
    * @returns {boolean} - true if clicked false otherwise.
    */
-  hitCheck = (p5) => {
+  hitCheck = () => {
     if (
       p5.mouseX > this.x &&
       p5.mouseX < this.x + this.width &&
       p5.mouseY > this.y &&
       p5.mouseY < this.y + this.height
     ) {
-      if (sound.isPlaying()) {
-        globals.sound.pause();
+      if (current.sound.isPlaying()) {
+        current.sound.pause();
       } else {
-        globals.sound.loop();
+        current.sound.loop();
       }
       this.playing = !this.playing;
       return true;

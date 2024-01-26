@@ -1,5 +1,6 @@
-import { globals } from "../globals.js";
+import current from "../globals.js";
 import PlaybackButton from "./playbackButton.js";
+import p5 from "../../index.js";
 
 /**
  * @class
@@ -13,7 +14,7 @@ class ControlsAndInput {
    * @type {boolean}
    * @default false
    */
-  menuDisplayed = false;
+  isMenuDisplayed = false;
 
   /**
    * A playback button displayed in the top left of the screen
@@ -26,10 +27,10 @@ class ControlsAndInput {
    * make the window fullscreen or revert to windowed
    * @param {P5} - p5 instance
    */
-  mousePressed(p5) {
-    if (!this.playbackButton.hitCheck(p5)) {
-      var fs = p5.fullscreen();
-      fullscreen(!fs);
+  mousePressed() {
+    if (!this.playbackButton?.hitCheck(p5)) {
+      let fs = p5.fullscreen();
+      p5.fullscreen(!fs);
     }
   }
 
@@ -37,15 +38,24 @@ class ControlsAndInput {
    * responds to keyboard presses
    * @param {number} keycode - the ascii code of the keypressed
    */
-  keyPressed(keycode) {
-    // console.log(keycode);
-    if (keycode == 32) {
-      this.menuDisplayed = !this.menuDisplayed;
+  keyPressed(key) {
+    const keyCode = key.keyCode;
+    const spacebarKey = 32;
+    const zeroKey = 48;
+    const nineKey = 58;
+    if (keyCode === spacebarKey) {
+      this.isMenuDisplayed = !this.isMenuDisplayed;
     }
 
-    if (keycode > 48 && keycode < 58) {
-      var visNumber = keycode - 49;
-      globals.vis.selectVisual(globals.vis.visuals[visNumber].name);
+    if (keyCode > zeroKey && keyCode < nineKey) {
+      let visNumber = keyCode - zeroKey - 1;
+
+      const curVis = current.vis;
+      const curVisList = curVis.visuals;
+      const selectedVis = curVisList[visNumber];
+      const selectedVisName = curVisList[visNumber].name;
+
+      curVis && curVis.selectVisual(selectedVis && selectedVisName);
     }
   }
 
@@ -53,7 +63,7 @@ class ControlsAndInput {
    * draws the playback button and potentially the menu
    * @param {P5} - p5 instance
    */
-  draw(p5) {
+  draw() {
     p5.push();
     p5.fill("white");
     p5.stroke("black");
@@ -62,10 +72,10 @@ class ControlsAndInput {
 
     // playback button
     this.playbackButton.draw(p5);
-    // only draw the menu if menu displayed is set to true.
-    if (this.menuDisplayed) {
+    // only draw the menu if menu displayed is set to true
+    if (this.isMenuDisplayed) {
       p5.text("Select a visualisation:", 100, 30);
-      this.menu();
+      this.menu(p5);
     }
     p5.pop();
   }
@@ -74,10 +84,10 @@ class ControlsAndInput {
    * draw out menu items for each visualisation
    * @param {P5} - p5 instance
    */
-  menu(p5) {
-    for (var i = 0; i < globals.vis.visuals.length; i++) {
-      var yLoc = 70 + i * 40;
-      p5.text(i + 1 + ":  " + globals.vis.visuals[i].name, 100, yLoc);
+  menu() {
+    for (let i = 0; i < current.vis.visuals.length; i++) {
+      let yLoc = 70 + i * 40;
+      p5.text(i + 1 + ":  " + current.vis.visuals[i].name, 100, yLoc);
     }
   }
 }
