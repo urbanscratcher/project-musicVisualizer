@@ -1,6 +1,7 @@
 /**
  * @class
- * @classdesc represents Visualization. serves as a placeholder for common properties and methods
+ * @classdesc abstract parent class that represents any visualization. serves as a placeholder for common properties and methods
+ * @memberof Abstractions
  */
 class Visualization {
   constructor() {}

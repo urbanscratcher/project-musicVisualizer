@@ -5,6 +5,7 @@ import PlaybackButton from "./PlaybackButton.js";
 /**
  * @class
  * @classdesc represents controls and input to handle the onscreen menu, keyboard and mouse
+ * @memberof Managers
  */
 class ControlsAndInputManager {
   /**

@@ -3,6 +3,7 @@ import { p5 } from "../../index.js";
 /**
  * @class
  * @classdesc sound manager. singleton.
+ * @memberof Managers
  */
 class SoundManager {
   /**

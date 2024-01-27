@@ -3,8 +3,9 @@ import Visualization from "../classes/Visualization.js";
 import { fourier } from "../globals.js";
 
 /**
- * wavepattern
+ * wave form
  * @extends Visualization
+ * @memberof Visualizations
  */
 class WavePattern extends Visualization {
   name = "wavepattern";
@@ -13,9 +14,6 @@ class WavePattern extends Visualization {
     super();
   }
 
-  /**
-   * draw the wave form to the screen
-   */
   draw() {
     p5.push();
     p5.noFill();
@@ -23,18 +21,19 @@ class WavePattern extends Visualization {
     p5.strokeWeight(2);
 
     p5.beginShape();
-    // calculate the waveform from the fft.
-    let wave = fourier.waveform();
-    for (let i = 0; i < wave.length; i++) {
-      // for each element of the waveform map it to screen
-      // coordinates and make a new vertex at the point.
-      let x = p5.map(i, 0, wave.length, 0, p5.width);
-      let y = p5.map(wave[i], -1, 1, 0, p5.height);
+    // calculate the waveform from the fft w/ -1 < amp value < 1.
+    const amplitudes = fourier.waveform();
+    const binLength = amplitudes.length;
+    const width = p5.width;
+    const height = p5.height;
 
+    amplitudes.forEach((amp, freq) => {
+      const x = p5.map(freq, 0, binLength, 0, width);
+      const y = p5.map(amp, -1, 1, height, 0);
       p5.vertex(x, y);
-    }
-
+    });
     p5.endShape();
+
     p5.pop();
   }
 }

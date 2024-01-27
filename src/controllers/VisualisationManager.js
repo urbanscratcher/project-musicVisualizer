@@ -1,6 +1,7 @@
 /**
  * @class
  * @classdesc container class for the visualisations
+ * @memberof Managers
  */
 class VisualizationManager {
   /**

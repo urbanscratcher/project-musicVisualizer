@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/controllers/ControlsAndInputManager.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/controllers/ControlsAndInputManager.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
+import visualManager from "./VisualisationManager.js";
+import PlaybackButton from "./PlaybackButton.js";
+
+/**
+ * @class
+ * @classdesc represents controls and input to handle the onscreen menu, keyboard and mouse
+ * @memberof Managers
+ */
+class ControlsAndInputManager {
+  /**
+   * Singleton instance
+   */
+  static instance;
+
+  /**
+   * Private constructor to enforce singleton pattern
+   * @private
+   * @returns {ControlsAndInputManager}
+   */
+  constructor() {
+    if (!ControlsAndInputManager.instance) {
+      /**
+       * A playback button displayed in the top left of the screen
+       * @type {PlaybackButton}
+       */
+      this.playbackButton = new PlaybackButton();
+      ControlsAndInputManager.instance = this;
+    }
+    return ControlsAndInputManager.instance;
+  }
+
+  /**
+   * whether the menu is currently displayed
+   * @type {boolean}
+   * @default false
+   */
+  isMenuDisplayed = false;
+
+  /**
+   * make the window fullscreen or revert to windowed
+   * @param {P5} - p5 instance
+   */
+  mousePressed() {
+    if (!this.playbackButton?.hitCheck(p5)) {
+      let fs = p5.fullscreen();
+      p5.fullscreen(!fs);
+    }
+  }
+
+  /**
+   * responds to keyboard presses
+   * @param {number} key - the ascii code of the keypressed
+   */
+  keyPressed(key) {
+    const keyCode = key.keyCode;
+    const KEYCODE_SPACEBAR = 32;
+    const KEYCODE_0 = 48;
+    const KEYCODE_9 = 58;
+
+    if (keyCode === KEYCODE_SPACEBAR) {
+      this.isMenuDisplayed = !this.isMenuDisplayed;
+    }
+
+    if (keyCode > KEYCODE_0 &amp;&amp; keyCode &lt; KEYCODE_9) {
+      let visNumber = keyCode - KEYCODE_0 - 1;
+
+      const curVis = visualManager;
+      const curVisList = curVis.visuals;
+      const selectedVis = curVisList[visNumber];
+      const selectedVisName = curVisList[visNumber].name;
+
+      curVis &amp;&amp; curVis.selectVisual(selectedVis &amp;&amp; selectedVisName);
+    }
+  }
+
+  /**
+   * draws the playback button and potentially the menu
+   * @param {P5} - p5 instance
+   */
+  draw() {
+    p5.push();
+    p5.fill("white");
+    p5.stroke("black");
+    p5.strokeWeight(2);
+    p5.textSize(34);
+
+    // playback button
+    this.playbackButton.draw(p5);
+    // only draw the menu if menu displayed is set to true
+    if (this.isMenuDisplayed) {
+      p5.text("Select a visualisation:", 100, 30);
+      this.menu(p5);
+    }
+    p5.pop();
+  }
+
+  /**
+   * draw out menu items for each visualisation
+   * @param {P5} - p5 instance
+   */
+  menu() {
+    for (let i = 0; i &lt; visualManager.visuals.length; i++) {
+      let yLoc = 70 + i * 40;
+      p5.text(i + 1 + ":  " + visualManager.visuals[i].name, 100, yLoc);
+    }
+  }
+}
+
+/**
+ * Create a single instance of the Controls and input manager
+ * @type {ControlsAndInputManager}
+ */
+const controlsManager = new ControlsAndInputManager();
+export default controlsManager;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Abstractions.html">Abstractions</a></li><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualizations.html">Visualizations</a></li></ul><h3>Classes</h3><ul><li><a href="Abstractions.Visualization.html">Visualization</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="Visualizations.Blocks.html">Blocks</a></li><li><a href="Visualizations.Needles.html">Needles</a></li><li><a href="Visualizations.Spectrum.html">Spectrum</a></li><li><a href="Visualizations.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jan 28 2024 05:56:29 GMT+0900 (GMT+09:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

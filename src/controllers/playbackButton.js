@@ -4,6 +4,7 @@ import { p5 } from "../../index.js";
 /**
  * @class
  * @classdesc displays and handles clicks on the playback button.
+ * @memberof UIs
  */
 class PlaybackButton {
   x = 20;
