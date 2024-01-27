@@ -14,26 +14,25 @@ class Spectrum extends Visualization {
 
   draw() {
     p5.push();
-    let spectrum = fourier.analyze();
     p5.noStroke();
-    //fill(0,255,0)
-    // for (var i = 0; i< spectrum.length; i++){
-    // 	var x = map(i, 0, spectrum.length, 0, width);
-    //     var h = -height + map(spectrum[i], 0, 255, height, 0);
-    //     rect(x, height, width / spectrum.length, h );
-    // 		}
+    const freqSpectrum = fourier.analyze();
+    const binLength = freqSpectrum.length;
+    const height = p5.height;
+    const width = p5.width;
 
-    for (let i = 0; i < spectrum.length; i++) {
-      //fade the colour of the bin from green to red
-      let g = p5.map(spectrum[i], 0, 255, 255, 0);
-      p5.fill(spectrum[i], g, 0);
+    freqSpectrum.forEach((amplitude, frequency) => {
+      const x = 0;
+      const y = p5.map(frequency, 0, binLength, 0, height);
+      const w = p5.map(amplitude, 0, 255, 0, width);
 
-      //draw each bin as a rectangle from the left of the screen
-      //across
-      let y = p5.map(i, 0, spectrum.length, 0, p5.height);
-      let w = p5.map(spectrum[i], 0, 255, 0, p5.width);
-      p5.rect(0, y, w, p5.height / spectrum.length);
-    }
+      // fade the color of the bin from green to red
+      const greenValue = p5.map(amplitude, 0, 255, 255, 0);
+      p5.fill(amplitude, greenValue, 0);
+
+      // draw a rectangle from the left of the screen
+      p5.rect(x, y, w, height / binLength);
+    });
+
     p5.pop();
   }
 }

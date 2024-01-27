@@ -2,7 +2,7 @@ import { SOUND_SRC } from "./constants.js";
 import controlManager from "./controllers/ControlsAndInputManager.js";
 import soundManager from "./controllers/SoundManager.js";
 import visualManager from "./controllers/VisualisationManager.js";
-import { fourier } from "./globals.js";
+import Blocks from "./visualizations/Blocks.js";
 import Needles from "./visualizations/Needles.js";
 import Spectrum from "./visualizations/Spectrum.js";
 import WavePattern from "./visualizations/Wavepattern.js";
@@ -26,6 +26,7 @@ export function sketch(p5) {
     visualManager.add(new Spectrum());
     visualManager.add(new WavePattern());
     visualManager.add(new Needles());
+    visualManager.add(new Blocks());
   };
 
   p5.draw = () => {

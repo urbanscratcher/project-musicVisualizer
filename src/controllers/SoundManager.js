@@ -37,6 +37,7 @@ class SoundManager {
    */
   loadSound(src, successCb, errorCb, whileLoadingCb) {
     const success = () => {
+      this.sound.setVolume(1);
       this.duration = this.sound.duration();
       this.isSoundReady = true;
 
