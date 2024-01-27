@@ -96,7 +96,7 @@ class Needles extends Visualization {
    * resize the plots sizes when the screen is resized.
    * readjust pad, plotWidth, plotHeight, and dialRadius.
    */
-  onResize() {
+  onResize = () => {
     /**
      * pad
      * @type {number}
@@ -120,7 +120,7 @@ class Needles extends Visualization {
      * @type {number}
      */
     this.dialRadius = (this.plotWidth - this.pad) / 2 - 5;
-  }
+  };
 
   /**
    * draws a needle to an individual plot

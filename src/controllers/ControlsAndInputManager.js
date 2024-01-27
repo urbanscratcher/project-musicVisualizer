@@ -90,7 +90,7 @@ class ControlsAndInputManager {
     // only draw the menu if menu displayed is set to true
     if (this.isMenuDisplayed) {
       p5.text("Select a visualisation:", 100, 30);
-      this.menu(p5);
+      this.menu();
     }
     p5.pop();
   }
@@ -100,10 +100,14 @@ class ControlsAndInputManager {
    * @param {P5} - p5 instance
    */
   menu() {
-    for (let i = 0; i < visualManager.visuals.length; i++) {
-      let yLoc = 70 + i * 40;
-      p5.text(i + 1 + ":  " + visualManager.visuals[i].name, 100, yLoc);
-    }
+    visualManager.visuals.forEach((visual, i) => {
+      const y = 70 + i * 40;
+      const nameDisplayed = visual.name
+        .split("")
+        .map((char, i) => (i === 0 ? char.toUpperCase() : char))
+        .join("");
+      p5.text(i + 1 + ":  " + nameDisplayed, 100, y);
+    });
   }
 }
 

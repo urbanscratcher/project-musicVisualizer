@@ -4,6 +4,7 @@ import soundManager from "./controllers/SoundManager.js";
 import visualManager from "./controllers/VisualisationManager.js";
 import Blocks from "./visualizations/Blocks.js";
 import Needles from "./visualizations/Needles.js";
+import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
 import WavePattern from "./visualizations/Wavepattern.js";
 
@@ -23,10 +24,11 @@ export function sketch(p5) {
     p5.background(0);
 
     // add visualisations
+    visualManager.add(new RidgePlots());
+    visualManager.add(new Blocks());
     visualManager.add(new Spectrum());
     visualManager.add(new WavePattern());
     visualManager.add(new Needles());
-    visualManager.add(new Blocks());
   };
 
   p5.draw = () => {
@@ -54,8 +56,7 @@ export function sketch(p5) {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
     const curVis = visualManager;
     // [guard] if there is no visualizations to be selected, end funtion
-    const isVisualizationsExist = curVis.visuals.length > 0;
-    if (!isVisualizationsExist) return;
+    if (!curVis.visuals.length > 0) return;
 
     // [guard] if there is no selected visualization, end funtion
     const selectedVis = curVis?.selectedVisual;
