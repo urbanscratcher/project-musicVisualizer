@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: controllers/PlaybackButton.js</title>
+    <title>JSDoc: Source: controllers/VisualisationManager.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: controllers/PlaybackButton.js</h1>
+    <h1 class="page-title">Source: controllers/VisualisationManager.js</h1>
 
     
 
@@ -26,75 +26,72 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import SoundManager from "./SoundManager.js";
-import { p5 } from "../../index.js";
-
-/**
+            <pre class="prettyprint source linenums"><code>/**
  * @class
- * @classdesc displays and handles clicks on the playback button.
+ * @classdesc container class for the visualisations
  */
-class PlaybackButton {
-  x = 20;
-  y = 20;
-  width = 20;
-  height = 20;
+class VisualizationManager {
+  /**
+   * Singleton instance
+   */
+  static instance;
 
   /**
-   * flag to determine whether to play or pause after button click and to determine which icon to draw
-   * @type {boolean}
+   * Private constructor to enforce singleton pattern
+   * @private
+   * @returns {VisualizationManager}
    */
-  playing = false;
-
-  /**
-   * @function
-   */
-  draw = () => {
-    if (this.playing) {
-      p5.rect(this.x, this.y, this.width / 2 - 2, this.height);
-      p5.rect(
-        this.x + (this.width / 2 + 2),
-        this.y,
-        this.width / 2 - 2,
-        this.height
-      );
-    } else {
-      p5.triangle(
-        this.x,
-        this.y,
-        this.x + this.width,
-        this.y + this.height / 2,
-        this.x,
-        this.y + this.height
-      );
+  constructor() {
+    if (!VisualizationManager.instance) {
+      VisualizationManager.instance = this;
     }
-  };
+    return VisualizationManager.instance;
+  }
 
   /**
-   * checks for clicks on the button, starts or pauses playabck.
-   * @function
-   * @returns {boolean} - true if clicked false otherwise.
+   * Array to store available visualizations
+   * @type {Visualization[]}
    */
-  hitCheck = () => {
-    if (
-      p5.mouseX > this.x &amp;&amp;
-      p5.mouseX &lt; this.x + this.width &amp;&amp;
-      p5.mouseY > this.y &amp;&amp;
-      p5.mouseY &lt; this.y + this.height
-    ) {
-      const curSound = SoundManager.sound;
-      if (curSound.isPlaying()) {
-        curSound.pause();
-      } else {
-        curSound.loop();
+  visuals = [];
+
+  /**
+   * currently selected vis. set to null until vis loaded in
+   * @type {Visualization|null}
+   */
+  selectedVisual = null;
+
+  /**
+   * add a new visualisation to the array
+   * @param {Visualization} vis
+   */
+  add(vis) {
+    this.visuals.push(vis);
+    //if selectedVisual is null set the new visual as the
+    //current visualiation
+    if (this.selectedVisual == null) {
+      this.selectVisual(vis.name);
+    }
+  }
+
+  /**
+   * select a visualisation using it name property
+   * @param {string} visName
+   */
+  selectVisual(visName) {
+    for (var i = 0; i &lt; this.visuals.length; i++) {
+      if (visName == this.visuals[i].name) {
+        this.selectedVisual = this.visuals[i];
       }
-      this.playing = !this.playing;
-      return true;
     }
-    return false;
-  };
+  }
 }
 
-export default PlaybackButton;
+/**
+ * Create a single instance of the Visualizations
+ * @type {VisualizationManager}
+ */
+const visualManager = new VisualizationManager();
+export default visualManager;
 </code></pre>
         </article>
     </section>

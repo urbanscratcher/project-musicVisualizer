@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Global</title>
+    <title>JSDoc: Class: SoundManager</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Global</h1>
+    <h1 class="page-title">Class: SoundManager</h1>
 
     
 
@@ -28,7 +28,9 @@
 
 <header>
     
-        <h2></h2>
+        <h2><span class="attribs"><span class="type-signature">(private) </span></span>SoundManager<span class="signature">()</span><span class="type-signature"> &rarr; {SoundManger}</span></h2>
+        
+            <div class="class-description">sound manager. singleton.</div>
         
     
 </header>
@@ -38,7 +40,32 @@
     
         
 
-        
+    
+    <h2>Constructor</h2>
+    
+
+    
+    <h4 class="name" id="SoundManager"><span class="type-signature">(private) </span>new SoundManager<span class="signature">()</span><span class="type-signature"> &rarr; {SoundManger}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Private constructor to enforce singleton pattern
+</div>
+
+
+
+
+
+
+
+
+
+
+
 
 
 <dl class="details">
@@ -68,6 +95,11 @@
     
 
     
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="controllers_SoundManager.js.html">controllers/SoundManager.js</a>, <a href="controllers_SoundManager.js.html#line7">line 7</a>
+    </li></ul></dd>
+    
 
     
 
@@ -77,7 +109,42 @@
 </dl>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
         
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">SoundManger</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
     
     </div>
 
@@ -98,26 +165,16 @@
 
         
             
-<h4 class="name" id="controlsManager"><span class="type-signature">(constant) </span>controlsManager<span class="type-signature"> :<a href="ControlsAndInputManager.html">ControlsAndInputManager</a></span></h4>
+<h4 class="name" id="instance"><span class="type-signature"></span>instance<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    Create a single instance of the Controls and input manager
+    Singleton instance
 </div>
 
 
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="ControlsAndInputManager.html">ControlsAndInputManager</a></span>
-
-
-        </li>
-    </ul>
 
 
 
@@ -152,7 +209,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_ControlsAndInputManager.js.html">controllers/ControlsAndInputManager.js</a>, <a href="controllers_ControlsAndInputManager.js.html#line113">line 113</a>
+        <a href="controllers_SoundManager.js.html">controllers/SoundManager.js</a>, <a href="controllers_SoundManager.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -170,26 +227,16 @@
 
         
             
-<h4 class="name" id="fourier"><span class="type-signature">(constant) </span>fourier<span class="type-signature"> :P5.FFT</span></h4>
+<h4 class="name" id="sound"><span class="type-signature"></span>sound<span class="type-signature"></span></h4>
 
 
 
 
 <div class="description">
-    shares an instance of the p5 Fast Fourier Transform object for frequency analysis
+    current sound obj
 </div>
 
 
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">P5.FFT</span>
-
-
-        </li>
-    </ul>
 
 
 
@@ -224,151 +271,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="globals.js.html">globals.js</a>, <a href="globals.js.html#line10">line 10</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="soundManager"><span class="type-signature">(constant) </span>soundManager<span class="type-signature"> :<a href="SoundManager.html">SoundManager</a></span></h4>
-
-
-
-
-<div class="description">
-    Create a single instance of the SoundManager
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="SoundManager.html">SoundManager</a></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_SoundManager.js.html">controllers/SoundManager.js</a>, <a href="controllers_SoundManager.js.html#line44">line 44</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="visualManager"><span class="type-signature">(constant) </span>visualManager<span class="type-signature"> :<a href="VisualizationManager.html">VisualizationManager</a></span></h4>
-
-
-
-
-<div class="description">
-    Create a single instance of the Visualizations
-</div>
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type"><a href="VisualizationManager.html">VisualizationManager</a></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="controllers_VisualisationManager.js.html">controllers/VisualisationManager.js</a>, <a href="controllers_VisualisationManager.js.html#line65">line 65</a>
+        <a href="controllers_SoundManager.js.html">controllers/SoundManager.js</a>, <a href="controllers_SoundManager.js.html#line16">line 16</a>
     </li></ul></dd>
     
 
@@ -396,7 +299,7 @@
     
 
     
-    <h4 class="name" id="sketch"><span class="type-signature"></span>sketch<span class="signature">(p5)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="loadSound"><span class="type-signature"></span>loadSound<span class="signature">(src)</span><span class="type-signature"></span></h4>
     
 
     
@@ -404,7 +307,7 @@
 
 
 <div class="description">
-    defines p5js lifecycles and events
+    Load a sound and set it in the sounds object.
 </div>
 
 
@@ -440,13 +343,13 @@
 
         <tr>
             
-                <td class="name"><code>p5</code></td>
+                <td class="name"><code>src</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">P5</span>
+<span class="param-type">string</span>
 
 
             
@@ -456,7 +359,7 @@
 
             
 
-            <td class="description last">The p5 instance</td>
+            <td class="description last">The source file path of the sound.</td>
         </tr>
 
     
@@ -497,7 +400,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="sketch.js.html">sketch.js</a>, <a href="sketch.js.html#line15">line 15</a>
+        <a href="controllers_SoundManager.js.html">controllers/SoundManager.js</a>, <a href="controllers_SoundManager.js.html#line35">line 35</a>
     </li></ul></dd>
     
 

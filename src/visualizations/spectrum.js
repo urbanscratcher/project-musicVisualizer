@@ -1,14 +1,18 @@
-import GlobalState from "../GlobalState.js";
 import { p5 } from "../../index.js";
+import { fourier } from "../globals.js";
+import Visualization from "../classes/Visualization.js";
 
-class Spectrum {
-  constructor() {}
+/**
+ * spectrum pattern
+ * @extends Visualization
+ */
+class Spectrum extends Visualization {
+  constructor() {
+    super();
+    this.name = "spectrum";
+  }
 
-  name = "spectrum";
-
-  draw = () => {
-    const { fourier } = GlobalState;
-
+  draw() {
     p5.push();
     let spectrum = fourier.analyze();
     p5.noStroke();
@@ -31,7 +35,7 @@ class Spectrum {
       p5.rect(0, y, w, p5.height / spectrum.length);
     }
     p5.pop();
-  };
+  }
 }
 
 export default Spectrum;

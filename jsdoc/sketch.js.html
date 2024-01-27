@@ -26,74 +26,76 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { globals, sounds } from "./globals.js";
-import ControlsAndInput from "./controllers/controlsAndInput.js";
+            <pre class="prettyprint source linenums"><code>import { SOUND_SRC } from "./constants.js";
+import controlsManager from "./controllers/ControlsAndInputManager.js";
+import SoundManager from "./controllers/SoundManager.js";
+import visualManager from "./controllers/VisualisationManager.js";
+import { fourier } from "./globals.js";
+import Needles from "./visualizations/Needles.js";
+import Spectrum from "./visualizations/Spectrum.js";
+import WavePattern from "./visualizations/Wavepattern.js";
 
 /**
- * Create a new p5 instance with a sketch function
+ * defines p5js lifecycles and events
  * @function
  * @param {P5} p5 - The p5 instance
  */
 export function sketch(p5) {
-  // preload sounds before setup
+  // preloads sounds before setup
   p5.preload = () => {
-    const soundLoaded = p5.loadSound(sounds[0]);
-    globals.sound = soundLoaded;
+    SoundManager.loadSound(SOUND_SRC);
   };
 
   // initialize the sketch
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
     p5.background(0);
-    globals.controls = new ControlsAndInput();
-
-    //instantiate the fft object
-    // globals.fourier = new window.p5.FFT();
-
-    //create a new visualisation container and add visualisations
-    // globals.vis = new Visualisations();
-    // globals.vis.add(new Spectrum());
-    // globals.vis.add(new WavePattern());
-    // vis.add(new Needles());
+    // create a new visualisation container and add visualisations
+    visualManager.add(new Spectrum());
+    visualManager.add(new WavePattern());
+    visualManager.add(new Needles());
   };
 
-  // continuously update the sketch
+  // draw function called continuously to update the sketch
   p5.draw = () => {
     p5.background(0);
-    //draw the selected visualisation
-    globals.vis?.selectedVisual &amp;&amp; globals.vis.selectedVisual.draw(p5);
-    //draw the controls on top.
-    globals.controls.draw(p5);
+
+    // draw the selected visualisation
+    visualManager.selectedVisual.draw();
+
+    // draw the controls on top.
+    controlsManager.draw();
   };
-}
 
-// [GLOBAL EVENTS] ---------------------------------------
-/**
- * Event handler for mouse click
- * @function
- */
-function mouseClicked() {
-  globals.controls.mousePressed();
-}
+  // [Event Handlers] ---------------------------
+  p5.mouseClicked = () => {
+    controlsManager.mousePressed();
+  };
 
-/**
- * Event handler for key press
- * @function
- */
-function keyPressed() {
-  globals.controls.keyPressed(keyCode);
-}
+  p5.keyPressed = (key) => {
+    controlsManager.keyPressed(key);
+  };
 
-/**
- * Event handler for window resize.
- * when the window has been resized. Resize canvas to fit if the visualisation needs to be resized call its onResize method
- * @function
- */
-function windowResized() {
-  resizeCanvas(p5.windowWidth, p5.windowHeight);
-  if (globals.vis.selectedVisual.hasOwnProperty("onResize")) {
-    globals.vis.selectedVisual.onResize();
-  }
+  // Resize canvas to fit if the visualisation needs to be resized call its onResize method
+  p5.windowResized = () => {
+    p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
+
+    const curVis = visualManager;
+
+    // [guard] if there is no visualizations to be selected, end funtion
+    const isVisualizationsExist = curVis.visuals.length > 0;
+    if (!isVisualizationsExist) return;
+
+    // [guard] if there is no selected visualization, end funtion
+    const selectedVis = curVis?.selectedVisual;
+    if (!selectedVis) return;
+
+    // if the selected visualization has resize function, execute it
+    const canResize = selectedVis.hasOwnProperty("onResize");
+    if (canResize) {
+      selectedVis.onResize();
+    }
+  };
 }
 </code></pre>
         </article>
@@ -105,13 +107,13 @@ function windowResized() {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="globals.html">globals</a></li></ul><h3>Classes</h3><ul><li><a href="ControlsAndInput.html">ControlsAndInput</a></li><li><a href="module.exports.html">exports</a></li></ul><h3>Global</h3><ul><li><a href="global.html#keyPressed">keyPressed</a></li><li><a href="global.html#mouseClicked">mouseClicked</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#sounds">sounds</a></li><li><a href="global.html#windowResized">windowResized</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Needles.html">Needles</a></li><li><a href="PlaybackButton.html">PlaybackButton</a></li><li><a href="SoundManager.html">SoundManager</a></li><li><a href="Spectrum.html">Spectrum</a></li><li><a href="Visualization.html">Visualization</a></li><li><a href="VisualizationManager.html">VisualizationManager</a></li><li><a href="WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Fri Jan 26 2024 14:41:51 GMT+0900 (GMT+09:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sat Jan 27 2024 14:15:38 GMT+0900 (GMT+09:00)
 </footer>
 
 <script> prettyPrint(); </script>

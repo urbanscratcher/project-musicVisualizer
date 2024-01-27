@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: controllers/SoundManager.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,125 +17,63 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: controllers/SoundManager.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
 
+/**
+ * @class
+ * @classdesc sound manager. singleton.
+ */
+class SoundManager {
+  /**
+   * Singleton instance
+   */
+  static instance;
 
-    <h3> </h3>
+  /**
+   * current sound obj
+   */
+  sound = {};
 
+  /**
+   * Private constructor to enforce singleton pattern
+   * @private
+   * @returns {SoundManger}
+   */
+  constructor() {
+    if (!SoundManager.instance) {
+      SoundManager.instance = this;
+    }
 
+    return SoundManager.instance;
+  }
 
+  /**
+   * Load a sound and set it in the sounds object.
+   * @param {string} src - The source file path of the sound.
+   */
+  loadSound(src) {
+    this.sound = p5.loadSound(src);
+  }
+}
 
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>src/globals.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">globally shared objects</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="globals.js.html">globals.js</a>, <a href="globals.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+/**
+ * Create a single instance of the SoundManager
+ * @type {SoundManager}
+ */
+const soundManager = new SoundManager();
+export default soundManager;
+</code></pre>
+        </article>
+    </section>
 
 
 

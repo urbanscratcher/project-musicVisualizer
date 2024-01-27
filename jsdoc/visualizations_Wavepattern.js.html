@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: visualizations/Wavepattern.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,125 +17,60 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: visualizations/Wavepattern.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
+import Visualization from "../classes/Visualization.js";
+import { fourier } from "../globals.js";
 
+/**
+ * wavepattern
+ * @extends Visualization
+ */
+class WavePattern extends Visualization {
+  name = "wavepattern";
 
-    <h3> </h3>
+  constructor() {
+    super();
+  }
 
+  /**
+   * draw the wave form to the screen
+   */
+  draw() {
+    p5.push();
+    p5.noFill();
+    p5.stroke(255, 0, 0);
+    p5.strokeWeight(2);
 
+    p5.beginShape();
+    //calculate the waveform from the fft.
+    let wave = fourier.waveform();
+    for (let i = 0; i &lt; wave.length; i++) {
+      //for each element of the waveform map it to screen
+      //coordinates and make a new vertex at the point.
+      let x = p5.map(i, 0, wave.length, 0, p5.width);
+      let y = p5.map(wave[i], -1, 1, 0, p5.height);
 
+      p5.vertex(x, y);
+    }
 
+    p5.endShape();
+    p5.pop();
+  }
+}
 
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-<section>
-
-<header>
-    
-        <h2>src/globals.js</h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">globally shared objects</div>
-        
-
-        
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="globals.js.html">globals.js</a>, <a href="globals.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
+export default WavePattern;
+</code></pre>
+        </article>
+    </section>
 
 
 

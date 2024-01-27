@@ -1,11 +1,11 @@
-import GlobalState from "../GlobalState.js";
+import SoundManager from "./SoundManager.js";
 import { p5 } from "../../index.js";
 
 /**
  * @class
  * @classdesc displays and handles clicks on the playback button.
  */
-export default class PlaybackButton {
+class PlaybackButton {
   x = 20;
   y = 20;
   width = 20;
@@ -53,10 +53,11 @@ export default class PlaybackButton {
       p5.mouseY > this.y &&
       p5.mouseY < this.y + this.height
     ) {
-      if (GlobalState.sound.isPlaying()) {
-        GlobalState.sound.pause();
+      const curSound = SoundManager.sound;
+      if (curSound.isPlaying()) {
+        curSound.pause();
       } else {
-        GlobalState.sound.loop();
+        curSound.loop();
       }
       this.playing = !this.playing;
       return true;
@@ -64,3 +65,5 @@ export default class PlaybackButton {
     return false;
   };
 }
+
+export default PlaybackButton;

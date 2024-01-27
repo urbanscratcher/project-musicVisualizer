@@ -1,14 +1,22 @@
 import { p5 } from "../../index.js";
-import GlobalState from "../GlobalState.js";
+import Visualization from "../classes/Visualization.js";
+import { fourier } from "../globals.js";
 
-//draw the waveform to the screen
-class WavePattern {
-  constructor() {}
-
+/**
+ * wavepattern
+ * @extends Visualization
+ */
+class WavePattern extends Visualization {
   name = "wavepattern";
 
-  //draw the wave form to the screen
-  draw = () => {
+  constructor() {
+    super();
+  }
+
+  /**
+   * draw the wave form to the screen
+   */
+  draw() {
     p5.push();
     p5.noFill();
     p5.stroke(255, 0, 0);
@@ -16,7 +24,7 @@ class WavePattern {
 
     p5.beginShape();
     //calculate the waveform from the fft.
-    let wave = GlobalState.fourier.waveform();
+    let wave = fourier.waveform();
     for (let i = 0; i < wave.length; i++) {
       //for each element of the waveform map it to screen
       //coordinates and make a new vertex at the point.
@@ -28,7 +36,7 @@ class WavePattern {
 
     p5.endShape();
     p5.pop();
-  };
+  }
 }
 
 export default WavePattern;

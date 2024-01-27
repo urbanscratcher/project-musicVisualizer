@@ -1,13 +1,33 @@
-import PlaybackButton from "./playbackButton.js";
 import { p5 } from "../../index.js";
-import GlobalState from "../GlobalState.js";
+import visualManager from "./VisualisationManager.js";
+import PlaybackButton from "./PlaybackButton.js";
 
 /**
  * @class
  * @classdesc represents controls and input to handle the onscreen menu, keyboard and mouse
  */
-class ControlsAndInput {
-  constructor() {}
+class ControlsAndInputManager {
+  /**
+   * Singleton instance
+   */
+  static instance;
+
+  /**
+   * Private constructor to enforce singleton pattern
+   * @private
+   * @returns {ControlsAndInputManager}
+   */
+  constructor() {
+    if (!ControlsAndInputManager.instance) {
+      /**
+       * A playback button displayed in the top left of the screen
+       * @type {PlaybackButton}
+       */
+      this.playbackButton = new PlaybackButton();
+      ControlsAndInputManager.instance = this;
+    }
+    return ControlsAndInputManager.instance;
+  }
 
   /**
    * whether the menu is currently displayed
@@ -15,13 +35,6 @@ class ControlsAndInput {
    * @default false
    */
   isMenuDisplayed = false;
-
-  /**
-   * A playback button displayed in the top left of the screen
-   * @type {PlaybackButton}
-   * @default instance
-   */
-  playbackButton = new PlaybackButton();
 
   /**
    * make the window fullscreen or revert to windowed
@@ -51,7 +64,7 @@ class ControlsAndInput {
     if (keyCode > KEYCODE_0 && keyCode < KEYCODE_9) {
       let visNumber = keyCode - KEYCODE_0 - 1;
 
-      const curVis = GlobalState.vis;
+      const curVis = visualManager;
       const curVisList = curVis.visuals;
       const selectedVis = curVisList[visNumber];
       const selectedVisName = curVisList[visNumber].name;
@@ -86,12 +99,16 @@ class ControlsAndInput {
    * @param {P5} - p5 instance
    */
   menu() {
-    console.log(GlobalState.vis);
-    for (let i = 0; i < GlobalState.vis.visuals.length; i++) {
+    for (let i = 0; i < visualManager.visuals.length; i++) {
       let yLoc = 70 + i * 40;
-      p5.text(i + 1 + ":  " + GlobalState.vis.visuals[i].name, 100, yLoc);
+      p5.text(i + 1 + ":  " + visualManager.visuals[i].name, 100, yLoc);
     }
   }
 }
 
-export default ControlsAndInput;
+/**
+ * Create a single instance of the Controls and input manager
+ * @type {ControlsAndInputManager}
+ */
+const controlsManager = new ControlsAndInputManager();
+export default controlsManager;

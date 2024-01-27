@@ -1,67 +1,57 @@
-// import { controls, vis, fourier } from "./globals.js";
 import { SOUND_SRC } from "./constants.js";
-import ControlsAndInput from "./controllers/controlsAndInput.js";
-import Visualisations from "./controllers/visualisations.js";
-import Spectrum from "./visualizations/spectrum.js";
-import WavePattern from "./visualizations/wavepattern.js";
-import Needles from "./visualizations/needles.js";
-import GlobalState from "./GlobalState.js";
+import controlManager from "./controllers/ControlsAndInputManager.js";
+import soundManager from "./controllers/SoundManager.js";
+import visualManager from "./controllers/VisualisationManager.js";
+import { fourier } from "./globals.js";
+import Needles from "./visualizations/Needles.js";
+import Spectrum from "./visualizations/Spectrum.js";
+import WavePattern from "./visualizations/Wavepattern.js";
 
 /**
- * assigns functions to p5js lifecycles and events
+ * defines p5js lifecycles and events
  * @function
  * @param {P5} p5 - The p5 instance
  */
 export function sketch(p5) {
-  // preload sounds before setup
   p5.preload = () => {
-    GlobalState.sound = p5.loadSound(SOUND_SRC);
+    // preloads a sound before setup
+    soundManager.loadSound(SOUND_SRC);
   };
 
-  // initialize the sketch
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
     p5.background(0);
 
-    // create controls and input
-    // controls = new ControlsAndInput();
-
-    // instantiate the fft object
-    // fourier = new window.p5.FFT();
-
-    // create a new visualisation container and add visualisations
-    GlobalState.vis = new Visualisations();
-    GlobalState.vis.add(new Spectrum());
-    GlobalState.vis.add(new WavePattern());
-    GlobalState.vis.add(new Needles());
+    // add visualisations
+    visualManager.add(new Spectrum());
+    visualManager.add(new WavePattern());
+    visualManager.add(new Needles());
   };
 
-  // draw function called continuously to update the sketch
   p5.draw = () => {
+    // keep background black
     p5.background(0);
 
     // draw the selected visualisation
-    GlobalState.vis.selectedVisual.draw();
+    visualManager.selectedVisual.draw();
 
     // draw the controls on top.
-    GlobalState.controls.draw();
+    controlManager.draw();
   };
 
   // [Event Handlers] ---------------------------
   p5.mouseClicked = () => {
-    GlobalState.controls.mousePressed();
+    controlManager.mousePressed();
   };
 
   p5.keyPressed = (key) => {
-    GlobalState.controls.keyPressed(key);
+    controlManager.keyPressed(key);
   };
 
   // Resize canvas to fit if the visualisation needs to be resized call its onResize method
   p5.windowResized = () => {
     p5.resizeCanvas(p5.windowWidth, p5.windowHeight);
-
-    const curVis = GlobalState.vis;
-
+    const curVis = visualManager;
     // [guard] if there is no visualizations to be selected, end funtion
     const isVisualizationsExist = curVis.visuals.length > 0;
     if (!isVisualizationsExist) return;
