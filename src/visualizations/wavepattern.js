@@ -5,7 +5,7 @@ import { fourier } from "../globals.js";
 /**
  * wave form
  * @extends Visualization
- * @memberof Visualizations
+ * @memberof Visualization
  */
 class WavePattern extends Visualization {
   name = "wavepattern";

@@ -5,7 +5,7 @@ import { fourier } from "../globals.js";
 /**
  * needles moving by different frequency groups
  * @extends Visualization
- * @memberof Visualizations
+ * @memberof Visualization
  */
 class Needles extends Visualization {
   name = "needles";

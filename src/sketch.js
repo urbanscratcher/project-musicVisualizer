@@ -63,8 +63,9 @@ export function sketch(p5) {
     if (!selectedVis) return;
 
     // if the selected visualization has resize function, execute it
-    const canResize = selectedVis.hasOwnProperty("onResize");
+    const canResize = "onResize" in selectedVis;
     if (canResize) {
+      console.log("true");
       selectedVis.onResize();
     }
   };

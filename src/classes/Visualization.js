@@ -1,7 +1,7 @@
 /**
  * @class
  * @classdesc abstract parent class that represents any visualization. serves as a placeholder for common properties and methods
- * @memberof Abstractions
+ * @namespace Visualization
  */
 class Visualization {
   constructor() {}
@@ -13,7 +13,7 @@ class Visualization {
   name;
 
   /**
-   * visualizes the current sound
+   * visualizes the current sound on the screen
    */
   draw() {}
 }

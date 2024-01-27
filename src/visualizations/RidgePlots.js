@@ -3,9 +3,10 @@ import Visualization from "../classes/Visualization.js";
 import { fourier } from "../globals.js";
 
 /**
- * RidgePlots
+ * @class
+ * @classdesc ridge plots
  * @extends Visualization
- * @memberof Visualizations
+ * @memberof Visualization
  */
 class RidgePlots extends Visualization {
   name = "ridge plots";
@@ -34,6 +35,7 @@ class RidgePlots extends Visualization {
    */
   frameUnit = 30;
 
+  // private members as deravative values exist
   _startX;
   get startX() {
     return p5.width / 5;
@@ -59,9 +61,12 @@ class RidgePlots extends Visualization {
     return p5.height - this.endY;
   }
 
-  onResize = () => {
+  /**
+   * when resizing, reset outputs
+   */
+  onResize() {
     this.outputs = [];
-  };
+  }
 
   draw() {
     p5.push();

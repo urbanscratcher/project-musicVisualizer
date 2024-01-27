@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Spectrum</title>
+    <title>JSDoc: Class: RidgePlots</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Spectrum</h1>
+    <h1 class="page-title">Class: RidgePlots</h1>
 
     
 
@@ -29,9 +29,9 @@
 <header>
     
         <h2><span class="attribs"><span class="type-signature"></span></span>
-            <span class="ancestors"><a href="Visualization.html">Visualization</a>.</span>Spectrum<span class="signature">()</span><span class="type-signature"></span></h2>
+            <span class="ancestors"><a href="Visualization.html">Visualization</a>.</span>RidgePlots<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">spectrum pattern</div>
+            <div class="class-description">ridge plots</div>
         
     
 </header>
@@ -46,7 +46,7 @@
     
 
     
-    <h4 class="name" id="Spectrum"><span class="type-signature"></span>new Spectrum<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="RidgePlots"><span class="type-signature"></span>new RidgePlots<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -94,7 +94,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_visualizations_Spectrum.js.html">src/visualizations/Spectrum.js</a>, <a href="src_visualizations_Spectrum.js.html#line10">line 10</a>
+        <a href="src_visualizations_RidgePlots.js.html">src/visualizations/RidgePlots.js</a>, <a href="src_visualizations_RidgePlots.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -152,6 +152,78 @@
 
     
         <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="frameUnit"><span class="type-signature"></span>frameUnit<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    the base unit of the line shown. shows a gap b/w lines
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_visualizations_RidgePlots.js.html">src/visualizations/RidgePlots.js</a>, <a href="src_visualizations_RidgePlots.js.html#line36">line 36</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
 
         
             
@@ -231,10 +303,242 @@
 
 
         
+            
+<h4 class="name" id="outputs"><span class="type-signature"></span>outputs<span class="type-signature"> :Array</span></h4>
+
+
+
+
+<div class="description">
+    2D array. An element of the outer array indicates an array of wave x, y positions, which forms one line
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">Array</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_visualizations_RidgePlots.js.html">src/visualizations/RidgePlots.js</a>, <a href="src_visualizations_RidgePlots.js.html#line24">line 24</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="speed"><span class="type-signature"></span>speed<span class="type-signature"> :number</span></h4>
+
+
+
+
+<div class="description">
+    speed of the appearance of lines
+</div>
+
+
+
+    <h5>Type:</h5>
+    <ul>
+        <li>
+            
+<span class="param-type">number</span>
+
+
+        </li>
+    </ul>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_visualizations_RidgePlots.js.html">src/visualizations/RidgePlots.js</a>, <a href="src_visualizations_RidgePlots.js.html#line30">line 30</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
     
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addWaves"><span class="type-signature"></span>addWaves<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    add x, y to the output array to draw the waveform
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_visualizations_RidgePlots.js.html">src/visualizations/RidgePlots.js</a>, <a href="src_visualizations_RidgePlots.js.html#line100">line 100</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
@@ -300,6 +604,94 @@
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="src_classes_Visualization.js.html">src/classes/Visualization.js</a>, <a href="src_classes_Visualization.js.html#line18">line 18</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="onResize"><span class="type-signature"></span>onResize<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    when resizing, reset outputs
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="src_visualizations_RidgePlots.js.html">src/visualizations/RidgePlots.js</a>, <a href="src_visualizations_RidgePlots.js.html#line67">line 67</a>
     </li></ul></dd>
     
 

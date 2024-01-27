@@ -12,13 +12,3 @@
  * ui controllers displayed on the screen
  * @namespace UIs
  */
-
-/**
- * parent classes that represents abstract concepts
- * @namespace Abstractions
- */
-
-/**
- * visualizations
- * @namespace Visualizations
- */

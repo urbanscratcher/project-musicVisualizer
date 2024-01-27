@@ -5,7 +5,7 @@ import Visualization from "../classes/Visualization.js";
 /**
  * spectrum pattern
  * @extends Visualization
- * @memberof Visualizations
+ * @memberof Visualization
  */
 class Spectrum extends Visualization {
   constructor() {
