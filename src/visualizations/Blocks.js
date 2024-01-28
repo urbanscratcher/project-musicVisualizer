@@ -1,6 +1,6 @@
 import { p5 } from "../../index.js";
 import Visualization from "../classes/Visualization.js";
-import { fourier } from "../globals.js";
+import { fourier, generateGui } from "../globals.js";
 
 /**
  * visualizes blocks using randomized values, noise()
@@ -10,31 +10,40 @@ import { fourier } from "../globals.js";
 class Blocks extends Visualization {
   name = "blocks";
 
-  noiseStep = 0.01;
+  NOISE_STEP = 0.01;
   prog = 0;
   rot = 0;
-  rotEnergyLimit = 260;
-  lineEnergyLimit = 180;
+
   constructor(sketch) {
     super();
 
+    // gui settings
     this.params = {
-      progSpeed: 0.05,
-      progSpeedMin: 0,
-      progSpeedMax: 1,
-      progSpeedStep: 0.05,
+      noisePace: 0.01,
+      noisePaceMin: 0.001,
+      noisePaceMax: 1,
+      noisePaceStep: 0.001,
+      progThresh: 180,
+      progThreshMin: 0,
+      progThreshMax: 255,
+      progThreshStep: 1,
       rotSpeed: 0.01,
       rotSpeedMin: 0,
       rotSpeedMax: 0.15,
       rotSpeedStep: 0.01,
+      rotThresh: 200,
+      rotThreshMin: 0,
+      rotThreshMax: 255,
+      rotThreshStep: 1,
+      seedThresh: 100,
+      seedThreshMin: 0,
+      seedThreshMax: 255,
+      seedThreshStep: 1,
       blockColor: [255, 0, 0],
       lineColor: [0, 255, 0],
     };
-    this.gui = p5.createGui(sketch);
-  }
 
-  drawGui(gui) {
-    this.gui.addObject(this.params);
+    this.gui = generateGui(sketch, this.params);
   }
 
   draw() {
@@ -42,11 +51,11 @@ class Blocks extends Visualization {
     const bassEnergy = fourier.getEnergy("bass");
     const trebleEnergy = fourier.getEnergy("treble");
     this.roatingBlocks(bassEnergy);
-    this.noiseLine(bassEnergy);
+    this.noiseLine(bassEnergy, trebleEnergy);
   }
 
   roatingBlocks(energy) {
-    if (energy < this.rotEnergyLimit) {
+    if (energy < this.params.rotThresh) {
       this.rot += this.params.rotSpeed;
     }
 
@@ -64,7 +73,7 @@ class Blocks extends Visualization {
     p5.pop();
   }
 
-  noiseLine(energy) {
+  noiseLine(energy, energy2) {
     p5.push();
     p5.translate(p5.width / 2, p5.height / 2);
     p5.stroke(this.params.lineColor);
@@ -74,14 +83,14 @@ class Blocks extends Visualization {
     p5.beginShape();
     for (let i = 0; i < 100; i++) {
       const x = p5.map(
-        p5.noise(i * this.noiseStep + this.prog),
+        p5.noise(i * this.params.noisePace + this.prog),
         0,
         1,
         -250,
         250
       );
       const y = p5.map(
-        p5.noise(i * this.noiseStep + this.prog + 1000),
+        p5.noise(i * this.params.noisePace + this.prog + 1000),
         0,
         1,
         -250,
@@ -92,8 +101,12 @@ class Blocks extends Visualization {
     p5.endShape();
     p5.pop();
 
-    if (energy > this.lineEnergyLimit) {
-      this.prog += this.params.progSpeed;
+    if (energy > this.params.progThresh) {
+      this.prog += 0.01;
+    }
+
+    if (energy2 > this.params.seedThresh) {
+      p5.noiseSeed();
     }
   }
 }

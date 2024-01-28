@@ -1,6 +1,6 @@
 import { p5 } from "../../index.js";
 import Visualization from "../classes/Visualization.js";
-import { fourier } from "../globals.js";
+import { fourier, generateGui } from "../globals.js";
 
 /**
  * ridge plots
@@ -10,9 +10,12 @@ import { fourier } from "../globals.js";
 class RidgePlots extends Visualization {
   name = "ridge plots";
 
-  constructor() {
+  constructor(sketch) {
     super();
     this.onResize();
+
+    this.params = { x: 1 };
+    this.gui = generateGui(sketch, this.params);
   }
 
   /**

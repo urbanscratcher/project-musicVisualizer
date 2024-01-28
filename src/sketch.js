@@ -14,11 +14,12 @@ import WavePattern from "./visualizations/Wavepattern.js";
  * @param {P5} p5 - The p5 instance
  */
 export function sketch(p5) {
+  const guis = [];
+
   p5.preload = function () {
     // preloads a sound before setup
     soundManager.loadSound(SOUND_SRC);
   };
-  let gui;
 
   p5.setup = function () {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
@@ -26,13 +27,10 @@ export function sketch(p5) {
 
     // add visualisations
     visualManager.add(new Blocks(this));
-    visualManager.add(new RidgePlots());
+    visualManager.add(new RidgePlots(this));
     visualManager.add(new Spectrum());
     visualManager.add(new WavePattern());
     visualManager.add(new Needles());
-
-    visualManager.selectedVisual?.drawGui(gui) &&
-      visualManager.selectedVisual.drawGui();
   };
 
   p5.draw = function () {
@@ -41,6 +39,13 @@ export function sketch(p5) {
 
     // draw the selected visualisation
     visualManager.selectedVisual.draw();
+    visualManager.visuals.forEach((el) => {
+      if (el.name === visualManager.selectedVisual.name) {
+        el?.gui && el.gui.show();
+      } else {
+        el?.gui && el.gui.hide();
+      }
+    });
 
     // draw the controls on top.
     controlManager.draw();
@@ -69,7 +74,6 @@ export function sketch(p5) {
     // if the selected visualization has resize function, execute it
     const canResize = "onResize" in selectedVis;
     if (canResize) {
-      console.log("true");
       selectedVis.onResize();
     }
   };

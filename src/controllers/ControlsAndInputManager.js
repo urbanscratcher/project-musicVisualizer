@@ -63,14 +63,11 @@ class ControlsAndInputManager {
     }
 
     if (keyCode > KEYCODE_0 && keyCode < KEYCODE_9) {
-      let visNumber = keyCode - KEYCODE_0 - 1;
+      const visNumber = keyCode - KEYCODE_0 - 1;
+      const vis = visualManager?.visuals[visNumber];
+      const visName = visualManager.visuals[visNumber].name;
 
-      const curVis = visualManager;
-      const curVisList = curVis.visuals;
-      const selectedVis = curVisList[visNumber];
-      const selectedVisName = curVisList[visNumber].name;
-
-      curVis && curVis.selectVisual(selectedVis && selectedVisName);
+      visualManager.selectVisual(vis && visName);
     }
   }
 
