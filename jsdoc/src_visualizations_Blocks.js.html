@@ -28,53 +28,115 @@
         <article>
             <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
 import Visualization from "../classes/Visualization.js";
-import { fourier } from "../globals.js";
+import { fourier, generateGui } from "../globals.js";
 
 /**
- * Blocks
+ * visualizes blocks using randomized values, noise()
  * @extends Visualization
- * @memberof Visualizations
+ * @memberof Visualization
  */
 class Blocks extends Visualization {
   name = "blocks";
 
-  constructor() {
-    super();
-  }
-
   NOISE_STEP = 0.01;
   prog = 0;
+  rot = 0;
+
+  constructor(sketch) {
+    super();
+
+    // gui settings
+    this.params = {
+      noisePace: 0.01,
+      noisePaceMin: 0.001,
+      noisePaceMax: 1,
+      noisePaceStep: 0.001,
+      progThresh: 180,
+      progThreshMin: 0,
+      progThreshMax: 255,
+      progThreshStep: 1,
+      rotSpeed: 0.01,
+      rotSpeedMin: 0,
+      rotSpeedMax: 0.15,
+      rotSpeedStep: 0.01,
+      rotThresh: 200,
+      rotThreshMin: 0,
+      rotThreshMax: 255,
+      rotThreshStep: 1,
+      seedThresh: 100,
+      seedThreshMin: 0,
+      seedThreshMax: 255,
+      seedThreshStep: 1,
+      blockColor: [255, 0, 0],
+      lineColor: [0, 255, 0],
+    };
+
+    this.gui = generateGui(sketch);
+    this.gui.addObject(this.params);
+  }
 
   draw() {
     fourier.analyze();
+    const bassEnergy = fourier.getEnergy("bass");
+    const trebleEnergy = fourier.getEnergy("treble");
+    this.roatingBlocks(bassEnergy);
+    this.noiseLine(bassEnergy, trebleEnergy);
+  }
+
+  roatingBlocks(energy) {
+    if (energy &lt; this.params.rotThresh) {
+      this.rot += this.params.rotSpeed;
+    }
+
+    const blockSize = p5.map(energy, 0, 255, 20, 100);
+    const increment = p5.width / 9;
 
     p5.push();
-    p5.stroke(255);
-    p5.noFill();
+    p5.rectMode(p5.CENTER);
     p5.translate(p5.width / 2, p5.height / 2);
+    p5.rotate(this.rot);
+    p5.fill(this.params.blockColor);
+    for (let i = 0; i &lt; 10; i++) {
+      p5.rect(i * increment - p5.width / 2, 0, blockSize, blockSize);
+    }
+    p5.pop();
+  }
+
+  noiseLine(energy, energy2) {
+    p5.push();
+    p5.translate(p5.width / 2, p5.height / 2);
+    p5.stroke(this.params.lineColor);
+    p5.strokeWeight(3);
+    p5.noFill();
+
     p5.beginShape();
     for (let i = 0; i &lt; 100; i++) {
       const x = p5.map(
-        p5.noise(i * this.NOISE_STEP + this.prog),
+        p5.noise(i * this.params.noisePace + this.prog),
         0,
         1,
-        -500,
-        500
+        -250,
+        250
       );
       const y = p5.map(
-        p5.noise(i * this.NOISE_STEP + this.prog + 1000),
+        p5.noise(i * this.params.noisePace + this.prog + 1000),
         0,
         1,
-        -500,
-        500
+        -250,
+        250
       );
       p5.vertex(x, y);
     }
     p5.endShape();
-
-    this.prog += 0.05;
-
     p5.pop();
+
+    if (energy > this.params.progThresh) {
+      this.prog += 0.01;
+    }
+
+    if (energy2 > this.params.seedThresh) {
+      p5.noiseSeed();
+    }
   }
 }
 
@@ -89,13 +151,13 @@ export default Blocks;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li><li><a href="Visualizations.Blocks.html">Blocks</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Firework.html">Firework</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jan 28 2024 08:06:59 GMT+0900 (GMT+09:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jan 28 2024 18:28:58 GMT+0900 (GMT+09:00)
 </footer>
 
 <script> prettyPrint(); </script>

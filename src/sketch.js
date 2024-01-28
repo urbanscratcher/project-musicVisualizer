@@ -3,6 +3,7 @@ import controlManager from "./controllers/ControlsAndInputManager.js";
 import soundManager from "./controllers/SoundManager.js";
 import visualManager from "./controllers/VisualisationManager.js";
 import Blocks from "./visualizations/Blocks.js";
+import FireworkVis from "./visualizations/FireworkVis.js";
 import Needles from "./visualizations/Needles.js";
 import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
@@ -14,8 +15,6 @@ import WavePattern from "./visualizations/Wavepattern.js";
  * @param {P5} p5 - The p5 instance
  */
 export function sketch(p5) {
-  const guis = [];
-
   p5.preload = function () {
     // preloads a sound before setup
     soundManager.loadSound(SOUND_SRC);
@@ -26,6 +25,7 @@ export function sketch(p5) {
     p5.background(0);
 
     // add visualisations
+    visualManager.add(new FireworkVis());
     visualManager.add(new Blocks(this));
     visualManager.add(new RidgePlots(this));
     visualManager.add(new Spectrum());
@@ -39,6 +39,8 @@ export function sketch(p5) {
 
     // draw the selected visualisation
     visualManager.selectedVisual.draw();
+
+    // control gui visibility. show the selected one only.
     visualManager.visuals.forEach((el) => {
       if (el.name === visualManager.selectedVisual.name) {
         el?.gui && el.gui.show();

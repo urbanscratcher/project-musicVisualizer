@@ -43,7 +43,8 @@ class Blocks extends Visualization {
       lineColor: [0, 255, 0],
     };
 
-    this.gui = generateGui(sketch, this.params);
+    this.gui = generateGui(sketch);
+    this.gui.addObject(this.params);
   }
 
   draw() {

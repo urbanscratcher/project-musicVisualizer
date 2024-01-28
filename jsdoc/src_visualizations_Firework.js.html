@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: src/visualizations/Wavepattern.js</title>
+    <title>JSDoc: Source: src/visualizations/Firework.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: src/visualizations/Wavepattern.js</h1>
+    <h1 class="page-title">Source: src/visualizations/Firework.js</h1>
 
     
 
@@ -27,46 +27,86 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
-import Visualization from "../classes/Visualization.js";
 import { fourier } from "../globals.js";
+import Visualization from "../classes/Visualization.js";
 
 /**
- * wave form
+ * firework beats
+ * @see {@link http://archive.gamedev.net/archive/reference/programming/features/beatdetection/index.html} inspiration for beat detection comes from
  * @extends Visualization
  * @memberof Visualization
  */
-class WavePattern extends Visualization {
-  name = "wavepattern";
-
+class Firework extends Visualization {
   constructor() {
     super();
+    this.name = "firework";
+    p5.frameRate(60);
+  }
+
+  /**
+   * stores average volumes
+   * @type {Array}
+   */
+  sampleBuffer = [];
+
+  calcConstant(sampleAverage) {
+    // const c = 1.1;
+    // work out a better c
+    // start by calculating the variance
+    let varianceSum = 0;
+    this.sampleBuffer.forEach((el, i) => {
+      varianceSum += el - sampleAverage;
+    });
+
+    const variance = varianceSum / this.sampleBuffer.length;
+    const m = -0.15 / (25 - 200);
+    const b = m * 200 + 1;
+    const c = m * variance + b;
+    return c;
+  }
+
+  detectBeat(spectrum) {
+    let isBeat = false;
+    let sum = 0;
+
+    spectrum.forEach((el, i) => {
+      sum += el * el;
+    });
+
+    if (this.sampleBuffer.length === 60) {
+      // detect a beat
+      let sampleSum = 0;
+      this.sampleBuffer.forEach((el, i) => {
+        sampleSum += el;
+      });
+      const sampleAverage = sampleSum / this.sampleBuffer.length;
+
+      const c = this.calcConstant(sampleAverage);
+      if (sum > sampleAverage * c) {
+        isBeat = true;
+      }
+
+      this.sampleBuffer.splice(0, 1);
+      this.sampleBuffer.push(sum);
+    } else {
+      this.sampleBuffer.push(sum);
+    }
+    return isBeat;
   }
 
   draw() {
     p5.push();
-    p5.noFill();
-    p5.stroke(255, 0, 0);
-    p5.strokeWeight(2);
-
-    p5.beginShape();
-    // calculate the waveform from the fft w/ -1 &lt; amp value &lt; 1.
-    const amplitudes = fourier.waveform();
-    const binLength = amplitudes.length;
-    const width = p5.width;
-    const height = p5.height;
-
-    amplitudes.forEach((amp, freq) => {
-      const x = p5.map(freq, 0, binLength, 0, width);
-      const y = p5.map(amp, -1, 1, height, 0);
-      p5.vertex(x, y);
-    });
-    p5.endShape();
-
+    const spectrum = fourier.analyze();
+    if (this.detectBeat(spectrum)) {
+      // beat
+      p5.fill(255, 0, 0);
+      p5.ellipse(p5.width / 2, p5.height / 2, 300, 300);
+    }
     p5.pop();
   }
 }
 
-export default WavePattern;
+export default Firework;
 </code></pre>
         </article>
     </section>
