@@ -43,8 +43,8 @@ class ControlsAndInputManager {
    */
   mousePressed() {
     if (!this.playbackButton?.hitCheck(p5)) {
-      let fs = p5.fullscreen();
-      p5.fullscreen(!fs);
+      // const fs = p5.fullscreen();
+      // p5.fullscreen(!fs);
     }
   }
 

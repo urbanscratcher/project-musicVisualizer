@@ -3,8 +3,7 @@ import Visualization from "../classes/Visualization.js";
 import { fourier } from "../globals.js";
 
 /**
- * @class
- * @classdesc ridge plots
+ * ridge plots
  * @extends Visualization
  * @memberof Visualization
  */
@@ -13,7 +12,6 @@ class RidgePlots extends Visualization {
 
   constructor() {
     super();
-    fourier.analyze();
     this.onResize();
   }
 
@@ -69,8 +67,8 @@ class RidgePlots extends Visualization {
   }
 
   draw() {
+    fourier.analyze();
     p5.push();
-
     p5.noFill();
     p5.stroke(255);
     p5.strokeWeight(2);

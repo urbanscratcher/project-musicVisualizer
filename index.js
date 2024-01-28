@@ -1,5 +1,8 @@
-import "./libs/p5.min.js";
-import "./libs/p5.sound.min.js";
+// import "./libs/p5.min.js";
+// import "./libs/p5.sound.min.js";
+// import "./libs/quicksettings.js";
+// import "./libs/p5.gui.js";
+
 import { sketch } from "./src/sketch.js";
 
 /**
