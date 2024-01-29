@@ -8,14 +8,13 @@ import { fourier, generateGui } from "../globals.js";
  * @memberof Visualization
  */
 class Blocks extends Visualization {
-  name = "blocks";
-
-  NOISE_STEP = 0.01;
+  noiseStep = 0.01;
   prog = 0;
   rot = 0;
+  gui;
 
   constructor(sketch) {
-    super();
+    super("blocks");
 
     // gui settings
     this.params = {
@@ -42,7 +41,6 @@ class Blocks extends Visualization {
       blockColor: [255, 0, 0],
       lineColor: [0, 255, 0],
     };
-
     this.gui = generateGui(sketch);
     this.gui.addObject(this.params);
   }
@@ -51,8 +49,12 @@ class Blocks extends Visualization {
     fourier.analyze();
     const bassEnergy = fourier.getEnergy("bass");
     const trebleEnergy = fourier.getEnergy("treble");
+
+    p5.push();
+    p5.angleMode(p5.RADIANS);
     this.roatingBlocks(bassEnergy);
     this.noiseLine(bassEnergy, trebleEnergy);
+    p5.pop();
   }
 
   roatingBlocks(energy) {

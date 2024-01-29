@@ -8,56 +8,61 @@ import { fourier, generateGui } from "../globals.js";
  * @memberof Visualization
  */
 class RidgePlots extends Visualization {
-  name = "ridge plots";
-
-  constructor(sketch) {
-    super();
-    this.onResize();
-
-    this.params = { x: 1 };
-    this.gui = generateGui(sketch, this.params);
-  }
-
+  params;
   /**
    * 2D array. An element of the outer array indicates an array of wave x, y positions, which forms one line
    * @type {Array}
    */
   outputs = [];
 
-  /**
-   * speed of the appearance of lines
-   * @type {number}
-   */
-  speed = 0.8;
+  constructor(sketch) {
+    super("ridge plots");
+    this.onResize();
 
-  /**
-   * the base unit of the line shown. shows a gap b/w lines
-   * @type {number}
-   */
-  frameUnit = 30;
+    this.gui = generateGui(sketch);
+    this.params = {
+      speed: 0.4,
+      speedMin: 0,
+      speedMax: 5,
+      speedStep: 0.01,
+      frameUnit: 13,
+      frameUnitMin: 0,
+      frameUnitMax: 100,
+      frameUnitStep: 1,
+      smallScale: 5,
+      smallScaleMin: 0,
+      smallScaleMax: 100,
+      smallScaleStep: 1,
+      bigScale: 65,
+      bigScaleMin: 0,
+      bigScaleMax: 100,
+      bigScaleStep: 1,
+    };
+    this.gui.addObject(this.params);
+  }
 
-  // private members as deravative values exist
-  _startX;
+  // deravative values w/ getter fn
+  #startX;
   get startX() {
     return p5.width / 5;
   }
 
-  _spectrumWidth;
+  #spectrumWidth;
   get spectrumWidth() {
     return (p5.width / 5) * 3;
   }
 
-  _endY;
+  #endY;
   get endY() {
     return p5.height / 5;
   }
 
-  _spectrumHeight;
+  #spectrumHeight;
   get spectrumHeight() {
     return p5.height - this.endY * 2;
   }
 
-  _startY;
+  #startY;
   get startY() {
     return p5.height - this.endY;
   }
@@ -71,27 +76,41 @@ class RidgePlots extends Visualization {
 
   draw() {
     fourier.analyze();
+
     p5.push();
     p5.noFill();
     p5.stroke(255);
     p5.strokeWeight(2);
-    if (p5.frameCount % this.frameUnit === 0) {
+
+    if (p5.frameCount % this.params.frameUnit === 0) {
       this.addWaves();
     }
 
-    this.outputs.forEach((output, i) => {
+    this.outputs.forEach((o, i) => {
       p5.beginShape();
-      output.forEach((wave, j) => {
-        wave.y -= this.speed;
+      o.forEach((wave, j) => {
+        p5.noFill(0);
+        p5.stroke(255);
+        wave.y -= this.params.speed;
         p5.vertex(wave.x, wave.y);
       });
       p5.endShape();
 
-      if (output[0].y < this.endY) {
+      if (o[0].y < this.endY) {
         this.outputs.splice(i, 1);
       }
-    });
 
+      p5.beginShape();
+      o.forEach((wave, j) => {
+        p5.fill(0);
+        p5.noStroke();
+        wave.y -= this.params.speed;
+        p5.vertex(wave.x, wave.y + 2);
+      });
+      p5.vertex(this.startX + this.spectrumWidth, p5.height);
+      p5.vertex(this.startX, p5.height);
+      p5.endShape();
+    });
     p5.pop();
   }
 
@@ -99,13 +118,11 @@ class RidgePlots extends Visualization {
    * add x, y to the output array to draw the waveform
    */
   addWaves() {
-    const waves = fourier.waveform();
-    const wavePositions = [];
-    const smallScale = 3;
-    const bigScale = this.frameUnit + 20;
+    const waveform = fourier.waveform();
+    const waves = [];
     let scale;
 
-    waves.forEach((el, i) => {
+    waveform.forEach((el, i) => {
       if (i % 20 === 0) {
         const x = p5.map(
           i,
@@ -116,17 +133,17 @@ class RidgePlots extends Visualization {
         );
 
         if (i < 1024 * (1 / 4) || i > 1024 * (3 / 4)) {
-          scale = smallScale;
+          scale = this.params.smallScale;
         } else {
-          scale = bigScale;
+          scale = this.params.bigScale;
         }
 
         const y = p5.map(el, -1, 1, -scale, scale);
-        wavePositions.push({ x, y: this.startY + y });
+        waves.push({ x, y: this.startY + y });
       }
     });
 
-    this.outputs.push(wavePositions);
+    this.outputs.push(waves);
   }
 }
 

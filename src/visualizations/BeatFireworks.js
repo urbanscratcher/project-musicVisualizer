@@ -12,12 +12,9 @@ import { sketch } from "../sketch.js";
  * @extends Visualization
  * @memberof Visualization
  */
-class FireworkVis extends Visualization {
+class BeatFireworks extends Visualization {
   constructor() {
-    super();
-    this.name = "firework";
-    p5.angleMode(p5.DEGREES);
-    p5.frameRate(60);
+    super("beat fireworks");
     this.fireworks = new Fireworks();
   }
 
@@ -28,11 +25,15 @@ class FireworkVis extends Visualization {
   sampleBuffer = [];
 
   draw() {
+    p5.push();
     const spectrum = fourier.analyze();
     if (this.detectBeat(spectrum)) {
-      this.fireworks.addFirework();
+      this.fireworks.spawnRandom();
     }
-    this.fireworks.update();
+    p5.frameRate(60);
+    p5.angleMode(p5.DEGREES);
+    this.fireworks.draw();
+    p5.pop();
   }
 
   calcConstant(sampleAverage) {
@@ -80,4 +81,4 @@ class FireworkVis extends Visualization {
   }
 }
 
-export default FireworkVis;
+export default BeatFireworks;

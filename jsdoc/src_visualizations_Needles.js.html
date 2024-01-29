@@ -36,42 +36,32 @@ import { fourier } from "../globals.js";
  * @memberof Visualization
  */
 class Needles extends Visualization {
-  name = "needles";
-
   constructor() {
     super();
-
+    this.name = "needles";
     // set initial values when the object is created
     this.onResize();
   }
 
   /**
    * the number of plots in columns
-   * @constant
-   * @type {number}
    */
-  PLOTS_COLUMN = 2;
+  #PLOTS_COLUMN = 2;
 
   /**
    * the number of plots in rows
-   * @constant
-   * @type {number}
    */
-  PLOTS_ROW = 2;
+  #PLOTS_ROW = 2;
 
   /**
    * the min arc of the needle plot
-   * @constant
-   * @type {number}
    */
-  MIN_ANGLE = p5.PI + p5.PI / 10;
+  #MIN_ANGLE = p5.PI + p5.PI / 10;
 
   /**
    * the max arc of the needle plot
-   * @constant
-   * @type {number}
    */
-  MAX_ANGLE = p5.TWO_PI - p5.PI / 10;
+  #MAX_ANGLE = p5.TWO_PI - p5.PI / 10;
 
   // frquencies used by the energyfunction to retrieve a value for each plot.
   frequencyGroups = ["bass", "lowMid", "highMid", "treble"];
@@ -82,14 +72,13 @@ class Needles extends Visualization {
 
     // iterator for selecting frequency bin.
     let currentBin = 0;
-    const frequencyGroup = this.frequencyGroups[currentBin];
     const width = p5.width;
     const height = p5.height;
 
     p5.push();
     // nested for loop to place plots in 2 X 2 grid
-    for (let i = 0; i &lt; this.PLOTS_ROW; i++) {
-      for (let j = 0; j &lt; this.PLOTS_COLUMN; j++) {
+    for (let i = 0; i &lt; this.#PLOTS_ROW; i++) {
+      for (let j = 0; j &lt; this.#PLOTS_COLUMN; j++) {
         // calculate the size of the plots
         let cGap = width / 25; // gap b/w rows
         let rGap = height / 15; // gap b/w columns
@@ -107,10 +96,10 @@ class Needles extends Visualization {
         p5.rect(x, y, w, h);
 
         // draw ticks
-        this.drawTicks(x + w / 2, y + h, frequencyGroup);
+        this.drawTicks(x + w / 2, y + h, this.frequencyGroups[currentBin]);
 
         // draw needles
-        const amp = fourier.getEnergy(frequencyGroup);
+        const amp = fourier.getEnergy(this.frequencyGroups[currentBin]);
         this.drawNeedle(amp, x + w / 2, y + h);
 
         currentBin++;
@@ -135,13 +124,13 @@ class Needles extends Visualization {
      * pad width
      * @type {number}
      */
-    this.plotWidth = (p5.width - this.pad) / this.PLOTS_COLUMN;
+    this.plotWidth = (p5.width - this.pad) / this.#PLOTS_COLUMN;
 
     /**
      * plot height
      * @type {number}
      */
-    this.plotHeight = (p5.height - this.pad) / this.PLOTS_ROW;
+    this.plotHeight = (p5.height - this.pad) / this.#PLOTS_ROW;
 
     /**
      * dial radius
@@ -164,7 +153,7 @@ class Needles extends Visualization {
     p5.translate(centreX, bottomY);
 
     // map the energy to the angle for the plot
-    const theta = p5.map(amplitude, 0, 255, this.MIN_ANGLE, this.MAX_ANGLE);
+    const theta = p5.map(amplitude, 0, 255, this.#MIN_ANGLE, this.#MAX_ANGLE);
     //calculate x and y coorindates from angle for the length of needle
     const x = this.dialRadius * p5.cos(theta);
     const y = this.dialRadius * p5.sin(theta);
@@ -182,8 +171,7 @@ class Needles extends Visualization {
    */
   drawTicks(centreX, bottomY, freqLabel) {
     // 8 ticks from pi to 2pi
-    let nextTickAngle = this.MIN_ANGLE;
-
+    let nextTickAngle = this.#MIN_ANGLE;
     p5.push();
     p5.stroke("#333333");
     p5.fill("#333333");
@@ -221,13 +209,13 @@ export default Needles;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Firework.html">Firework</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Jan 28 2024 18:28:58 GMT+0900 (GMT+09:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jan 29 2024 11:19:17 GMT+0900 (GMT+09:00)
 </footer>
 
 <script> prettyPrint(); </script>

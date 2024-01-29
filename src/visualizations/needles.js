@@ -8,42 +8,23 @@ import { fourier } from "../globals.js";
  * @memberof Visualization
  */
 class Needles extends Visualization {
-  name = "needles";
-
   constructor() {
-    super();
-
+    super("needles");
     // set initial values when the object is created
     this.onResize();
   }
 
-  /**
-   * the number of plots in columns
-   * @constant
-   * @type {number}
-   */
-  PLOTS_COLUMN = 2;
+  // the number of plots in columns
+  #PLOTS_COLUMN = 2;
 
-  /**
-   * the number of plots in rows
-   * @constant
-   * @type {number}
-   */
-  PLOTS_ROW = 2;
+  // the number of plots in rows
+  #PLOTS_ROW = 2;
 
-  /**
-   * the min arc of the needle plot
-   * @constant
-   * @type {number}
-   */
-  MIN_ANGLE = p5.PI + p5.PI / 10;
+  // the min arc of the needle plot
+  #MIN_ANGLE = p5.PI + p5.PI / 10;
 
-  /**
-   * the max arc of the needle plot
-   * @constant
-   * @type {number}
-   */
-  MAX_ANGLE = p5.TWO_PI - p5.PI / 10;
+  // the max arc of the needle plot
+  #MAX_ANGLE = p5.TWO_PI - p5.PI / 10;
 
   // frquencies used by the energyfunction to retrieve a value for each plot.
   frequencyGroups = ["bass", "lowMid", "highMid", "treble"];
@@ -54,36 +35,36 @@ class Needles extends Visualization {
 
     // iterator for selecting frequency bin.
     let currentBin = 0;
-    const frequencyGroup = this.frequencyGroups[currentBin];
     const width = p5.width;
     const height = p5.height;
 
     p5.push();
+    p5.angleMode(p5.RADIANS);
     // nested for loop to place plots in 2 X 2 grid
-    for (let i = 0; i < this.PLOTS_ROW; i++) {
-      for (let j = 0; j < this.PLOTS_COLUMN; j++) {
+    for (let i = 0; i < this.#PLOTS_ROW; i++) {
+      for (let j = 0; j < this.#PLOTS_COLUMN; j++) {
         // calculate the size of the plots
-        let cGap = width / 25; // gap b/w rows
-        let rGap = height / 15; // gap b/w columns
-        let halfWidth = width / 2;
-        let halfHeight = height / 2;
+        const cGap = width / 25; // gap b/w rows
+        const rGap = height / 15; // gap b/w columns
+        const halfWidth = width / 2;
+        const halfHeight = height / 2;
 
         // calculate the size of the plots
-        let x = j * (halfWidth - 0.6 * cGap) + cGap;
-        let y = i * (halfHeight - 0.5 * rGap) + rGap;
-        let w = halfWidth - cGap * 1.6;
-        let h = halfHeight - rGap * 1.5;
+        const x = j * (halfWidth - 0.6 * cGap) + cGap;
+        const y = i * (halfHeight - 0.5 * rGap) + rGap;
+        const w = halfWidth - cGap * 1.6;
+        const h = halfHeight - rGap * 1.5;
 
         //draw a rectangle at that location and size
         p5.fill("#f0f2d2");
         p5.rect(x, y, w, h);
 
         // draw ticks
-        this.drawTicks(x + w / 2, y + h, frequencyGroup);
+        this.drawTicks(x + w / 2, y + h, this.frequencyGroups[currentBin]);
 
         // draw needles
-        const amp = fourier.getEnergy(frequencyGroup);
-        this.drawNeedle(amp, x + w / 2, y + h);
+        const amp = fourier.getEnergy(this.frequencyGroups[currentBin]);
+        this.#drawNeedle(amp, x + w / 2, y + h);
 
         currentBin++;
       }
@@ -107,13 +88,13 @@ class Needles extends Visualization {
      * pad width
      * @type {number}
      */
-    this.plotWidth = (p5.width - this.pad) / this.PLOTS_COLUMN;
+    this.plotWidth = (p5.width - this.pad) / this.#PLOTS_COLUMN;
 
     /**
      * plot height
      * @type {number}
      */
-    this.plotHeight = (p5.height - this.pad) / this.PLOTS_ROW;
+    this.plotHeight = (p5.height - this.pad) / this.#PLOTS_ROW;
 
     /**
      * dial radius
@@ -128,7 +109,7 @@ class Needles extends Visualization {
    * @param {number} centreX - central x coordinate of the plot rectangle
    * @param {number} bottomY - The bottom y coordinate of the plot rectangle
    */
-  drawNeedle(amplitude, centreX, bottomY) {
+  #drawNeedle(amplitude, centreX, bottomY) {
     p5.push();
     p5.stroke("#333333");
 
@@ -136,7 +117,7 @@ class Needles extends Visualization {
     p5.translate(centreX, bottomY);
 
     // map the energy to the angle for the plot
-    const theta = p5.map(amplitude, 0, 255, this.MIN_ANGLE, this.MAX_ANGLE);
+    const theta = p5.map(amplitude, 0, 255, this.#MIN_ANGLE, this.#MAX_ANGLE);
     //calculate x and y coorindates from angle for the length of needle
     const x = this.dialRadius * p5.cos(theta);
     const y = this.dialRadius * p5.sin(theta);
@@ -154,8 +135,7 @@ class Needles extends Visualization {
    */
   drawTicks(centreX, bottomY, freqLabel) {
     // 8 ticks from pi to 2pi
-    let nextTickAngle = this.MIN_ANGLE;
-
+    let nextTickAngle = this.#MIN_ANGLE;
     p5.push();
     p5.stroke("#333333");
     p5.fill("#333333");

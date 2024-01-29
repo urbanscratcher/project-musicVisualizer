@@ -9,29 +9,25 @@ import Visualization from "../classes/Visualization.js";
  */
 class Spectrum extends Visualization {
   constructor() {
-    super();
-    this.name = "spectrum";
+    super("spectrum");
   }
 
   draw() {
     p5.push();
     p5.noStroke();
-    const freqSpectrum = fourier.analyze();
-    const binLength = freqSpectrum.length;
-    const height = p5.height;
-    const width = p5.width;
+    const spectrum = fourier.analyze();
+    const binLength = spectrum.length * 0.35;
 
-    freqSpectrum.forEach((amplitude, frequency) => {
+    spectrum.forEach((amp, freq) => {
       const x = 0;
-      const y = p5.map(frequency, 0, binLength, 0, height);
-      const w = p5.map(amplitude, 0, 255, 0, width);
+      const y = p5.map(freq, 0, binLength, 0, p5.height);
+      const w = p5.map(amp, 0, 255, 0, p5.width);
+      const h = p5.height / binLength;
 
       // fade the color of the bin from green to red
-      const greenValue = p5.map(amplitude, 0, 255, 255, 0);
-      p5.fill(amplitude, greenValue, 0);
-
-      // draw a rectangle from the left of the screen
-      p5.rect(x, y, w, height / binLength);
+      const green = p5.map(amp, 0, 255, 255, 0);
+      p5.fill(amp, green, 0);
+      p5.rect(x, y, w, h);
     });
 
     p5.pop();

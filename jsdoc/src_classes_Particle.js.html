@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: src/visualizations/Wavepattern.js</title>
+    <title>JSDoc: Source: src/classes/Particle.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: src/visualizations/Wavepattern.js</h1>
+    <h1 class="page-title">Source: src/classes/Particle.js</h1>
 
     
 
@@ -27,46 +27,69 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
-import Visualization from "../classes/Visualization.js";
-import { fourier } from "../globals.js";
 
 /**
- * wave form
- * @extends Visualization
- * @memberof Visualization
+ * represents a circled particle
  */
-class WavePattern extends Visualization {
-  name = "wavepattern";
+class Particle {
+  speed;
+  size;
+  deceleration;
 
-  constructor() {
-    super();
+  #x;
+  #y;
+  #color;
+  #angle;
+
+  /**
+   *
+   * @param {number} x
+   * @param {number} y
+   * @param {P5.Color} color
+   * @param {number} angle - direction when moving
+   * @param {number} speed - speed when moving
+   * @param {number|undefined} size - the size of a particle (the perimeter of a circle)
+   * @param {number|undefined} deceleration - the degree of deceleration when moving
+   */
+  constructor(x, y, color, angle, speed, size = 10, deceleration = 0.1) {
+    this.#x = x;
+    this.#y = y;
+    this.#color = color;
+    this.#angle = angle;
+    this.speed = speed;
+    this.size = size;
+    this.deceleration = deceleration;
   }
 
+  /**
+   * draws in loop
+   */
   draw() {
-    p5.push();
-    p5.noFill();
-    p5.stroke(255, 0, 0);
-    p5.strokeWeight(2);
+    this.#render(this.#x, this.#y, this.size, this.#color);
+    this.#update(this.deceleration, this.#angle, this.speed);
+  }
 
-    p5.beginShape();
-    // calculate the waveform from the fft w/ -1 &lt; amp value &lt; 1.
-    const amplitudes = fourier.waveform();
-    const binLength = amplitudes.length;
-    const width = p5.width;
-    const height = p5.height;
+  /**
+   * renders a particle
+   */
+  #render(x, y, size, color) {
+    p5.fill(color);
+    p5.ellipse(x, y, size, size);
+  }
 
-    amplitudes.forEach((amp, freq) => {
-      const x = p5.map(freq, 0, binLength, 0, width);
-      const y = p5.map(amp, -1, 1, height, 0);
-      p5.vertex(x, y);
-    });
-    p5.endShape();
-
-    p5.pop();
+  /**
+   * updates the states of a particle.
+   * relates to the motion of a particle.
+   * states: speed, x, and y
+   */
+  #update(dec, angle, speed) {
+    this.speed -= dec;
+    this.#x += p5.cos(angle) * speed;
+    this.#y += p5.sin(angle) * speed;
   }
 }
 
-export default WavePattern;
+export default Particle;
 </code></pre>
         </article>
     </section>

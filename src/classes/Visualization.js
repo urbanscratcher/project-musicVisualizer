@@ -4,7 +4,9 @@
  * @namespace Visualization
  */
 class Visualization {
-  constructor() {}
+  constructor(name) {
+    this.name = name;
+  }
 
   /**
    * the name of the visualization

@@ -3,7 +3,7 @@ import controlManager from "./controllers/ControlsAndInputManager.js";
 import soundManager from "./controllers/SoundManager.js";
 import visualManager from "./controllers/VisualisationManager.js";
 import Blocks from "./visualizations/Blocks.js";
-import FireworkVis from "./visualizations/FireworkVis.js";
+import BeatFireworks from "./visualizations/BeatFireworks.js";
 import Needles from "./visualizations/Needles.js";
 import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
@@ -25,12 +25,12 @@ export function sketch(p5) {
     p5.background(0);
 
     // add visualisations
-    visualManager.add(new FireworkVis());
-    visualManager.add(new Blocks(this));
     visualManager.add(new RidgePlots(this));
-    visualManager.add(new Spectrum());
-    visualManager.add(new WavePattern());
     visualManager.add(new Needles());
+    visualManager.add(new BeatFireworks());
+    visualManager.add(new Spectrum());
+    visualManager.add(new Blocks(this));
+    visualManager.add(new WavePattern());
   };
 
   p5.draw = function () {

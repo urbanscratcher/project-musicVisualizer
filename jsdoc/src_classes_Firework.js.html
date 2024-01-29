@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: src/visualizations/Wavepattern.js</title>
+    <title>JSDoc: Source: src/classes/Firework.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: src/visualizations/Wavepattern.js</h1>
+    <h1 class="page-title">Source: src/classes/Firework.js</h1>
 
     
 
@@ -26,47 +26,63 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
-import Visualization from "../classes/Visualization.js";
-import { fourier } from "../globals.js";
+            <pre class="prettyprint source linenums"><code>import Particle from "./Particle.js";
 
 /**
- * wave form
- * @extends Visualization
- * @memberof Visualization
+ * Firework
  */
-class WavePattern extends Visualization {
-  name = "wavepattern";
+class Firework {
+  /**
+   * @type {Particle[]}
+   */
+  particles = [];
 
-  constructor() {
-    super();
+  /**
+   * @type {boolean}
+   */
+  isDepleted = false;
+
+  #x;
+  #y;
+  #color;
+
+  /**
+   *
+   * @param {P5.Color} color
+   * @param {number} x
+   * @param {number} y
+   */
+  constructor(color, x, y) {
+    this.#color = color;
+    this.#x = x;
+    this.#y = y;
+
+    const ANGLE_FULL = 360;
+    const NUM = 20;
+    const ANGLE_BTW = ANGLE_FULL / NUM;
+    const SPEED_INIT = 10;
+
+    for (let angle = 0; angle &lt; ANGLE_FULL; angle += ANGLE_BTW) {
+      this.particles.push(
+        new Particle(this.#x, this.#y, this.#color, angle, SPEED_INIT)
+      );
+    }
   }
 
   draw() {
-    p5.push();
-    p5.noFill();
-    p5.stroke(255, 0, 0);
-    p5.strokeWeight(2);
-
-    p5.beginShape();
-    // calculate the waveform from the fft w/ -1 &lt; amp value &lt; 1.
-    const amplitudes = fourier.waveform();
-    const binLength = amplitudes.length;
-    const width = p5.width;
-    const height = p5.height;
-
-    amplitudes.forEach((amp, freq) => {
-      const x = p5.map(freq, 0, binLength, 0, width);
-      const y = p5.map(amp, -1, 1, height, 0);
-      p5.vertex(x, y);
+    this.particles.forEach((p) => {
+      if (p.speed >= 0) {
+        p.draw();
+      }
     });
-    p5.endShape();
 
-    p5.pop();
+    if (!this.particles[0].speed &lt; 0) {
+      this.isDepleted = true;
+    }
   }
 }
 
-export default WavePattern;
+export default Firework;
 </code></pre>
         </article>
     </section>

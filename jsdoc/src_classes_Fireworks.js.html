@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: src/visualizations/Wavepattern.js</title>
+    <title>JSDoc: Source: src/classes/Fireworks.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: src/visualizations/Wavepattern.js</h1>
+    <h1 class="page-title">Source: src/classes/Fireworks.js</h1>
 
     
 
@@ -27,46 +27,63 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
-import Visualization from "../classes/Visualization.js";
-import { fourier } from "../globals.js";
+import Firework from "./Firework.js";
 
 /**
- * wave form
- * @extends Visualization
- * @memberof Visualization
+ * Fireworks
  */
-class WavePattern extends Visualization {
-  name = "wavepattern";
+class Fireworks {
+  /**
+   * @type {Firework[]}
+   */
+  fireworks = [];
 
-  constructor() {
-    super();
+  constructor() {}
+
+  /**
+   * draw all fireworks
+   */
+  draw() {
+    this.#update();
+    this.fireworks.forEach((el, i) => {
+      el.draw();
+    });
   }
 
-  draw() {
-    p5.push();
-    p5.noFill();
-    p5.stroke(255, 0, 0);
-    p5.strokeWeight(2);
+  /**
+   * add a random firework
+   */
+  spawnRandom() {
+    const color = p5.color(
+      p5.random(0, 255),
+      p5.random(0, 255),
+      p5.random(0, 255)
+    );
+    const x = p5.random(p5.width * 0.2, p5.width * 0.8);
+    const y = p5.random(p5.height * 0.2, p5.height * 0.8);
 
-    p5.beginShape();
-    // calculate the waveform from the fft w/ -1 &lt; amp value &lt; 1.
-    const amplitudes = fourier.waveform();
-    const binLength = amplitudes.length;
-    const width = p5.width;
-    const height = p5.height;
+    this.spawn(color, x, y);
+  }
 
-    amplitudes.forEach((amp, freq) => {
-      const x = p5.map(freq, 0, binLength, 0, width);
-      const y = p5.map(amp, -1, 1, height, 0);
-      p5.vertex(x, y);
+  /**
+   * add a firework
+   * @param {P5.Color} color
+   * @param {number} x
+   * @param {number} y
+   */
+  spawn(color, x, y) {
+    this.fireworks.push(new Firework(color, x, y));
+  }
+
+  #update() {
+    this.fireworks.forEach((el, i) => {
+      if (el.isDepleted) {
+        this.fireworks.splice(i, 1);
+      }
     });
-    p5.endShape();
-
-    p5.pop();
   }
 }
-
-export default WavePattern;
+export default Fireworks;
 </code></pre>
         </article>
     </section>
