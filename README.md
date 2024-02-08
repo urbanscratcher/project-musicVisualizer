@@ -13,6 +13,15 @@
 - There will be an emphasis on improving the user interface(UI) using p5.js DOM.
 - I'm inspired by artist Lee Ufan's blend of dynamism and oriental simplicity. To convey this contradictory feeling, I aim to infuse the analog texture of a brush with dynamic music.
 
+## Program Design
+
+## Coding Techniques
+
+- Wrote codes with Object Oriented Programming style
+- Implemented modern JavaScript (ES6, private variables, class etc)
+- Used instance mode of p5js to adopt ES6 modules
+- wrote jsdoc for easy communication
+
 ## Fast Fourier Transformation
 
 - https://p5js.org/reference/#/p5.FFT
@@ -54,7 +63,7 @@
   Stackoverflow
   - https://stackoverflow.com/questions/33875322/javascript-and-es6-global-variables
   - https://stackoverflow.com/questions/43605434/what-is-the-correct-way-to-define-global-variable-in-es6-modules
-- What is Fourier Transform - https://www.youtube.com/watch?v=spUNpyF58BY&t=484s
+- What is Fourier Transform https://www.youtube.com/watch?v=spUNpyF58BY&t=484s
 - Beat Detection Algorithm
   - https://www.clear.rice.edu/elec301/Projects01/beat_sync/beatalgo.html
   - http://archive.gamedev.net/archive/reference/programming/features/beatdetection/index.html
