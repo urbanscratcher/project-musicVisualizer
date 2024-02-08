@@ -26,7 +26,7 @@
 - Wrote codes with Object Oriented Programming style
 - Implemented modern JavaScript (ES6, private variables, class etc)
 - Used instance mode of p5js to adopt ES6 modules
-- wrote jsdoc for easy communication
+- Support jsdoc for easy communication
 
 ## Fast Fourier Transformation
 
