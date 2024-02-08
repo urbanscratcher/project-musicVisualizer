@@ -12,7 +12,7 @@
 
 ## Goals & Inspiration
 
-- My primary goal is to apply advanced programming techniques, utilizing complex objects and arrays. - Also, I want to be familiar with simulation and motion with p5js.
+- My primary goal is to apply advanced programming techniques, utilizing complex objects and arrays. Also, I want to be familiar with simulation and motion with p5js.
 - The project will focus on five main features: Blocks mid, high, and low, Firework beats, Animating painted dots, inspired by the artist Lee Ufan, and Falling color pixelated bars.
 - There will be an emphasis on improving the user interface(UI) using p5.js DOM.
 - I'm inspired by artist Lee Ufan's blend of dynamism and oriental simplicity. To convey this contradictory feeling, I aim to infuse the analog texture of a brush with dynamic music.
