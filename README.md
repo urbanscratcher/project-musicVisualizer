@@ -6,16 +6,25 @@
 - I'm studying various techniques to visualize audio with the fast fourier transformation and p5js
 - The first few scenes are written from my lecturers as a template but I tweaked a bit for better results
 
-## Demo
-
-- https://project-music-visualizer.netlify.app/
-
 ## Goals & Inspiration
 
 - My primary goal is to apply advanced programming techniques, utilizing complex objects and arrays. Also, I want to be familiar with simulation and motion with p5js.
 - The project will focus on five main features: Blocks mid, high, and low, Firework beats, Animating painted dots, inspired by the artist Lee Ufan, and Falling color pixelated bars.
 - There will be an emphasis on improving the user interface(UI) using p5.js DOM.
 - I'm inspired by artist Lee Ufan's blend of dynamism and oriental simplicity. To convey this contradictory feeling, I aim to infuse the analog texture of a brush with dynamic music.
+
+## Demo
+
+- https://project-music-visualizer.netlify.app/
+
+## List of Visualizations
+
+1. Wave
+2. Spectrum
+3. Needles
+4. Ridge plots
+5. Blocks
+6. Beat Fireworks
 
 ## Program Design
 
@@ -34,15 +43,6 @@
 - `FFT.analyze()` returns an array of 1024 values between 0 and 255. Each value represents the amplitude (loudness) of a small frequency range (pitch of the sound).
 - `FFT.waveform()` returns an array of 1024 values between -1 and 1. Each value represents the amplitude of the sound for a tiny portion of time.
 - `FFT.energy(freq1, [freq2])` returns the volume of the sound at frequency range specified by the `freq1` and `freq2` parameter.
-
-## List of Visualizations
-
-1. Wave
-2. Spectrum
-3. Needles
-4. Ridge plots
-5. Blocks
-6. Beat Fireworks
 
 ## Resources
 
