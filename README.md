@@ -9,7 +9,6 @@
 ## Demo
 
 - https://project-music-visualizer.netlify.app/
-- jsdoc https://project-music-visualizer.netlify.app/jsdoc/index.html
 
 ## Goals & Inspiration
 
@@ -19,6 +18,8 @@
 - I'm inspired by artist Lee Ufan's blend of dynamism and oriental simplicity. To convey this contradictory feeling, I aim to infuse the analog texture of a brush with dynamic music.
 
 ## Program Design
+
+- jsdoc https://project-music-visualizer.netlify.app/jsdoc/index.html
 
 ## Coding Techniques
 
