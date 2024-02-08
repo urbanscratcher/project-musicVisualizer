@@ -8,6 +8,7 @@ import Needles from "./visualizations/Needles.js";
 import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
 import WavePattern from "./visualizations/Wavepattern.js";
+import Test from "./visualizations/Test.js";
 
 /**
  * defines p5js lifecycles and events
@@ -25,12 +26,14 @@ export function sketch(p5) {
     p5.background(0);
 
     // add visualisations
-    visualManager.add(new RidgePlots(this));
-    visualManager.add(new Needles());
-    visualManager.add(new BeatFireworks());
-    visualManager.add(new Spectrum());
-    visualManager.add(new Blocks(this));
+
     visualManager.add(new WavePattern());
+    visualManager.add(new Spectrum());
+    visualManager.add(new Needles());
+    visualManager.add(new RidgePlots(this));
+    visualManager.add(new BeatFireworks());
+    visualManager.add(new Blocks(this));
+    visualManager.add(new Test());
   };
 
   p5.draw = function () {

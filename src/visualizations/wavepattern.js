@@ -3,7 +3,7 @@ import Visualization from "../classes/Visualization.js";
 import { fourier } from "../globals.js";
 
 /**
- * wave form
+ * visualizes the shape of a wave that represents the amplitude value for each frequency
  * @extends Visualization
  * @memberof Visualization
  */
@@ -13,20 +13,43 @@ class WavePattern extends Visualization {
   }
 
   draw() {
+    const waveform = fourier.waveform();
+
     p5.push();
     p5.noFill();
-    p5.stroke(255, 0, 0);
-    p5.strokeWeight(2);
 
-    // calculate the waveform from the fft w/ -1 < amp value < 1.
-    const waveform = fourier.waveform();
-    const binLength = waveform.length;
+    // computes amplitude values along the time domain w/ FFT (-1 < amp value < 1)
 
     p5.beginShape();
-    waveform.forEach((amp, freq) => {
-      const x = p5.map(freq, 0, binLength, 0, p5.width);
+    const avg =
+      waveform.reduce((prev, curr, currIdx, arr) => prev + curr) /
+      waveform.length;
+    const std = Math.sqrt(
+      waveform.reduce(
+        (prev, curr, currIdx, arr) => prev + (curr - avg) * (curr - avg)
+      ) / waveform.length
+    );
+    const avgMapped = p5.map(avg, -1, 1, 1, 7);
+    const stdMapped = p5.map(std, 0, 3, 1, 25);
+
+    p5.strokeWeight(stdMapped);
+    const color = p5.map(stdMapped, 0, 3, 0, 255);
+
+    waveform.forEach((amp, idx) => {
+      const x = p5.map(idx, 0, waveform.length, 0, p5.width);
       const y = p5.map(amp, -1, 1, p5.height, 0);
+
       p5.vertex(x, y);
+
+      if (avgMapped >= 1 && avgMapped < 3) {
+        p5.stroke(0, color, color);
+      }
+      if (avgMapped >= 3 && avgMapped < 5) {
+        p5.stroke(0, color, 0);
+      }
+      if (avgMapped >= 5 && avgMapped <= 7) {
+        p5.stroke(color, color, 0);
+      }
     });
     p5.endShape();
 
