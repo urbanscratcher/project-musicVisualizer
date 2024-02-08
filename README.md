@@ -1,10 +1,14 @@
-# Audio Visualiser
+# Audio Visualizer
 
 ## Introduction
 
 - This is a simple music visualization project I am buliding for the final term project in my programming class
 - I'm studying various techniques to visualize audio with the fast fourier transformation and p5js
 - The first few scenes are written from my lecturers as a template but I tweaked a bit for better results
+
+## Demo
+
+- https://project-music-visualizer.netlify.app/
 
 ## Goals & Inspiration
 
