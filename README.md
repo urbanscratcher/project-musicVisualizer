@@ -9,6 +9,7 @@
 ## Demo
 
 - https://project-music-visualizer.netlify.app/
+- jsdoc https://project-music-visualizer.netlify.app/jsdoc/index.html
 
 ## Goals & Inspiration
 
