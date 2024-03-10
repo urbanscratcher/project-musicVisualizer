@@ -1,6 +1,6 @@
 import { p5 } from "../../index.js";
 import visualManager from "./VisualisationManager.js";
-import PlaybackButton from "./PlaybackButton.js";
+import PlaybackButton from "../ui/PlaybackButton.js";
 
 /**
  * @class
@@ -14,17 +14,19 @@ class ControlsAndInputManager {
   static instance;
 
   /**
+   * A playback button displayed in the top left of the screen
+   * @type {PlaybackButton}
+   */
+  playbackButton;
+
+  /**
    * Private constructor to enforce singleton pattern
    * @private
    * @returns {ControlsAndInputManager}
    */
   constructor() {
     if (!ControlsAndInputManager.instance) {
-      /**
-       * A playback button displayed in the top left of the screen
-       * @type {PlaybackButton}
-       */
-      this.playbackButton = new PlaybackButton();
+      // this.playbackButton = new PlaybackButton();
       ControlsAndInputManager.instance = this;
     }
     return ControlsAndInputManager.instance;
@@ -82,13 +84,15 @@ class ControlsAndInputManager {
     p5.strokeWeight(2);
     p5.textSize(34);
 
-    // playback button
-    this.playbackButton.draw(p5);
-    // only draw the menu if menu displayed is set to true
+    // draw playback button
+    this.playbackButton.draw();
+
+    // draw visualization list menu only if menu displayed is set to true
     if (this.isMenuDisplayed) {
       p5.text("Select a visualisation:", 100, 30);
       this.menu();
     }
+
     p5.pop();
   }
 

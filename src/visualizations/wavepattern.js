@@ -12,6 +12,10 @@ class WavePattern extends Visualization {
     super("wavepattern");
   }
 
+  /**
+   * Draws the waveform using the p5 library and the Fourier Transform.
+   *
+   */
   draw() {
     const waveform = fourier.waveform();
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Firework</title>
+    <title>JSDoc: Class: Dots</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Firework</h1>
+    <h1 class="page-title">Class: Dots</h1>
 
     
 
@@ -28,9 +28,10 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Firework<span class="signature">(color, x, y)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
+            <span class="ancestors"><a href="Visualization.html">Visualization</a>.</span>Dots<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Firework</div>
+            <div class="class-description">visualizes the shape of dots inspired by the artist Lee Ufan's work</div>
         
     
 </header>
@@ -45,7 +46,7 @@
     
 
     
-    <h4 class="name" id="Firework"><span class="type-signature"></span>new Firework<span class="signature">(color, x, y)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Dots"><span class="type-signature"></span>new Dots<span class="signature">()</span><span class="type-signature"></span></h4>
     
 
     
@@ -58,101 +59,6 @@
 
 
 
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>color</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">P5.Color</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>x</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>y</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last"></td>
-        </tr>
-
-    
-    </tbody>
-</table>
 
 
 
@@ -188,7 +94,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_classes_Firework.js.html">src/classes/Firework.js</a>, <a href="src_classes_Firework.js.html#line6">line 6</a>
+        <a href="src_visualizations_Dots.js.html">src/visualizations/Dots.js</a>, <a href="src_visualizations_Dots.js.html#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -222,6 +128,17 @@
     </div>
 
     
+        <h3 class="subsection-title">Extends</h3>
+
+        
+
+
+    <ul>
+        <li><a href="Visualization.html">Visualization</a></li>
+    </ul>
+
+
+    
 
     
 
@@ -238,10 +155,14 @@
 
         
             
-<h4 class="name" id="isDepleted"><span class="type-signature"></span>isDepleted<span class="type-signature"> :boolean</span></h4>
+<h4 class="name" id="name"><span class="type-signature"></span>name<span class="type-signature"> :string</span></h4>
 
 
 
+
+<div class="description">
+    the name of the visualization
+</div>
 
 
 
@@ -249,7 +170,7 @@
     <ul>
         <li>
             
-<span class="param-type">boolean</span>
+<span class="param-type">string</span>
 
 
         </li>
@@ -267,6 +188,11 @@
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Visualization.html#name">Visualization#name</a>
+    </li></ul></dd>
     
 
     
@@ -288,7 +214,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_classes_Firework.js.html">src/classes/Firework.js</a>, <a href="src_classes_Firework.js.html#line15">line 15</a>
+        <a href="src_classes_Visualization.js.html">src/classes/Visualization.js</a>, <a href="src_classes_Visualization.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -305,23 +231,35 @@
 
 
         
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
             
-<h4 class="name" id="particles"><span class="type-signature"></span>particles<span class="type-signature"> :Array:<a href="Visualization.Needles.html"></a>.&lt;<a href="Particle.html">Particle</a>:<a href="Visualization.Needles.html"></a>></span></h4>
+
+    
+
+    
+    <h4 class="name" id="draw"><span class="type-signature"></span>draw<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    visualizes the current sound on the screen
+</div>
 
 
 
 
 
 
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Array:<a href="Visualization.Needles.html"></a>.&lt;<a href="Particle.html">Particle</a>:<a href="Visualization.Needles.html"></a>></span>
 
 
-        </li>
-    </ul>
 
 
 
@@ -335,6 +273,11 @@
 
     
 
+    
+    <dt class="tag-overrides">Overrides:</dt>
+    <dd class="tag-overrides"><ul class="dummy"><li>
+        <a href="Visualization.html#draw">Visualization#draw</a>
+    </li></ul></dd>
     
 
     
@@ -356,7 +299,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_classes_Firework.js.html">src/classes/Firework.js</a>, <a href="src_classes_Firework.js.html#line10">line 10</a>
+        <a href="src_classes_Visualization.js.html">src/classes/Visualization.js</a>, <a href="src_classes_Visualization.js.html#line20">line 20</a>
     </li></ul></dd>
     
 
@@ -372,9 +315,21 @@
 
 
 
-        
-    
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
     
 
     

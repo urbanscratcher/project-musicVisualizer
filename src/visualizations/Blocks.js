@@ -11,12 +11,15 @@ class Blocks extends Visualization {
   noiseStep = 0.01;
   prog = 0;
   rot = 0;
+
+  // for custom settings
+  params;
   gui;
 
   constructor(sketch) {
     super("blocks");
 
-    // gui settings
+    // for custom settings
     this.params = {
       noisePace: 0.01,
       noisePaceMin: 0.001,

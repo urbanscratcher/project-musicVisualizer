@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: src/visualizations/Wavepattern.js</title>
+    <title>JSDoc: Source: src/classes/Sound.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: src/visualizations/Wavepattern.js</h1>
+    <h1 class="page-title">Source: src/classes/Sound.js</h1>
 
     
 
@@ -26,70 +26,31 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
-import Visualization from "../classes/Visualization.js";
-import { fourier } from "../globals.js";
-
-/**
- * visualizes the shape of a wave that represents the amplitude value for each frequency
- * @extends Visualization
- * @memberof Visualization
+            <pre class="prettyprint source linenums"><code>/**
+ * @class
+ * @classdesc Sound class to represent information of sound to be used in the app
  */
-class WavePattern extends Visualization {
-  constructor() {
-    super("wavepattern");
-  }
-
+class Sound {
   /**
-   * Draws the waveform using the p5 library and the Fourier Transform.
-   *
+   * @param {string} src - path to the sound file
+   * @param {string} name - name of the sound
+   * @param {string} artist - artist of the sound
+   * @param {boolean} isReady - flag to determine if the sound is ready to play
+   * @param {number} duration - duration of the sound
+   * @param {p5.SoundFile} loaded - the loaded sound
    */
-  draw() {
-    const waveform = fourier.waveform();
+  constructor({ src, name, artist = "Anonymous" }) {
+    this.src = src;
+    this.name = name;
+    this.artist = artist;
 
-    p5.push();
-    p5.noFill();
-
-    // computes amplitude values along the time domain w/ FFT (-1 &lt; amp value &lt; 1)
-
-    p5.beginShape();
-    const avg =
-      waveform.reduce((prev, curr, currIdx, arr) => prev + curr) /
-      waveform.length;
-    const std = Math.sqrt(
-      waveform.reduce(
-        (prev, curr, currIdx, arr) => prev + (curr - avg) * (curr - avg)
-      ) / waveform.length
-    );
-    const avgMapped = p5.map(avg, -1, 1, 1, 7);
-    const stdMapped = p5.map(std, 0, 3, 1, 25);
-
-    p5.strokeWeight(stdMapped);
-    const color = p5.map(stdMapped, 0, 3, 0, 255);
-
-    waveform.forEach((amp, idx) => {
-      const x = p5.map(idx, 0, waveform.length, 0, p5.width);
-      const y = p5.map(amp, -1, 1, p5.height, 0);
-
-      p5.vertex(x, y);
-
-      if (avgMapped >= 1 &amp;&amp; avgMapped &lt; 3) {
-        p5.stroke(0, color, color);
-      }
-      if (avgMapped >= 3 &amp;&amp; avgMapped &lt; 5) {
-        p5.stroke(0, color, 0);
-      }
-      if (avgMapped >= 5 &amp;&amp; avgMapped &lt;= 7) {
-        p5.stroke(color, color, 0);
-      }
-    });
-    p5.endShape();
-
-    p5.pop();
+    this.isReady = false;
+    this.duration = 0;
+    this.loaded = {};
   }
 }
 
-export default WavePattern;
+export default Sound;
 </code></pre>
         </article>
     </section>

@@ -36,6 +36,8 @@ import Needles from "./visualizations/Needles.js";
 import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
 import WavePattern from "./visualizations/Wavepattern.js";
+import Dots from "./visualizations/Dots.js";
+import Sound from "./classes/Sound.js";
 
 /**
  * defines p5js lifecycles and events
@@ -45,30 +47,64 @@ import WavePattern from "./visualizations/Wavepattern.js";
 export function sketch(p5) {
   p5.preload = function () {
     // preloads a sound before setup
-    soundManager.loadSound(SOUND_SRC);
+
+    // add a list of sounds
+    soundManager.add(
+      new Sound({
+        src: "./assets/ditto.wav",
+        name: "ditto",
+        artist: "newjeans",
+      })
+    );
+    soundManager.add(
+      new Sound({
+        src: "./assets/hype.wav",
+        name: "hype boy",
+        artist: "newjeans",
+      })
+    );
+    soundManager.add(
+      new Sound({
+        src: "./assets/attention.wav",
+        name: "attention",
+        artist: "newjeans",
+      })
+    );
+
+    // select a sound to play
+    soundManager.select("hype boy");
   };
 
   p5.setup = function () {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
+
+    // set default base color
     p5.background(0);
 
     // add visualisations
-    visualManager.add(new RidgePlots(this));
-    visualManager.add(new Needles());
-    visualManager.add(new BeatFireworks());
-    visualManager.add(new Spectrum());
-    visualManager.add(new Blocks(this));
+    visualManager.add(new Dots());
+
     visualManager.add(new WavePattern());
+    visualManager.add(new Spectrum());
+    visualManager.add(new Needles());
+    visualManager.add(new RidgePlots(this));
+    visualManager.add(new BeatFireworks());
+    visualManager.add(new Blocks(this));
   };
 
   p5.draw = function () {
-    // keep background black
-    p5.background(0);
+    // set the background color
+    if (visualManager.selectedVisual.name === "dots") {
+      p5.background(255);
+    } else {
+      p5.background(0);
+    }
 
     // draw the selected visualisation
     visualManager.selectedVisual.draw();
 
-    // control gui visibility. show the selected one only.
+    // control gui visibility
+    // show the selected one only
     visualManager.visuals.forEach((el) => {
       if (el.name === visualManager.selectedVisual.name) {
         el?.gui &amp;&amp; el.gui.show();
@@ -118,13 +154,13 @@ export function sketch(p5) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="Sound.html">Sound</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="UIs.Player.html">Player</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Dots.html">Dots</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jan 29 2024 12:13:40 GMT+0900 (GMT+09:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 10 2024 11:20:44 GMT+0900 (대한민국 표준시)
 </footer>
 
 <script> prettyPrint(); </script>

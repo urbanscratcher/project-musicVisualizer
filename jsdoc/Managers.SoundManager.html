@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature">(private) </span></span>
+        <h2><span class="attribs"><span class="type-signature"></span></span>
             <span class="ancestors"><a href="Managers.html">Managers</a>.</span>SoundManager<span class="signature">()</span><span class="type-signature"> &rarr; {SoundManger}</span></h2>
         
             <div class="class-description">sound manager. singleton.</div>
@@ -46,7 +46,7 @@
     
 
     
-    <h4 class="name" id="SoundManager"><span class="type-signature">(private) </span>new SoundManager<span class="signature">()</span><span class="type-signature"> &rarr; {SoundManger}</span></h4>
+    <h4 class="name" id="SoundManager"><span class="type-signature"></span>new SoundManager<span class="signature">()</span><span class="type-signature"> &rarr; {SoundManger}</span></h4>
     
 
     
@@ -54,7 +54,7 @@
 
 
 <div class="description">
-    Private constructor to enforce singleton pattern
+    Enforce singleton pattern
 </div>
 
 
@@ -166,75 +166,13 @@
 
         
             
-<h4 class="name" id="instance"><span class="type-signature"></span>instance<span class="type-signature"></span></h4>
+<h4 class="name" id="sound"><span class="type-signature"></span>sound<span class="type-signature"> :<a href="Sound.html">Sound</a></span></h4>
 
 
 
 
 <div class="description">
-    Singleton instance
-</div>
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_controllers_SoundManager.js.html">src/controllers/SoundManager.js</a>, <a href="src_controllers_SoundManager.js.html#line12">line 12</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="sound"><span class="type-signature"></span>sound<span class="type-signature"> :P5.SoundFile</span></h4>
-
-
-
-
-<div class="description">
-    currently loaded sound file
+    currently selected sound
 </div>
 
 
@@ -243,7 +181,7 @@
     <ul>
         <li>
             
-<span class="param-type">P5.SoundFile</span>
+<span class="param-type"><a href="Sound.html">Sound</a></span>
 
 
         </li>
@@ -282,7 +220,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_controllers_SoundManager.js.html">src/controllers/SoundManager.js</a>, <a href="src_controllers_SoundManager.js.html#line18">line 18</a>
+        <a href="src_controllers_SoundManager.js.html">src/controllers/SoundManager.js</a>, <a href="src_controllers_SoundManager.js.html#line15">line 15</a>
     </li></ul></dd>
     
 
@@ -299,84 +237,27 @@
 
 
         
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
             
+<h4 class="name" id="soundList"><span class="type-signature"></span>soundList<span class="type-signature"> :Array:<a href="Visualization.Needles.html"></a>.&lt;<a href="Sound.html">Sound</a>:<a href="Visualization.Needles.html"></a>></span></h4>
 
-    
-
-    
-    <h4 class="name" id="loadSound"><span class="type-signature"></span>loadSound<span class="signature">(src)</span><span class="type-signature"></span></h4>
-    
-
-    
 
 
 
 <div class="description">
-    Load a sound and set it in the sounds object.
+    list of sounds
 </div>
 
 
 
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
+    <h5>Type:</h5>
+    <ul>
+        <li>
             
-                <td class="name"><code>src</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
+<span class="param-type">Array:<a href="Visualization.Needles.html"></a>.&lt;<a href="Sound.html">Sound</a>:<a href="Visualization.Needles.html"></a>></span>
 
 
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">The source file path of the sound.</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
+        </li>
+    </ul>
 
 
 
@@ -411,7 +292,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_controllers_SoundManager.js.html">src/controllers/SoundManager.js</a>, <a href="src_controllers_SoundManager.js.html#line39">line 39</a>
+        <a href="src_controllers_SoundManager.js.html">src/controllers/SoundManager.js</a>, <a href="src_controllers_SoundManager.js.html#line21">line 21</a>
     </li></ul></dd>
     
 
@@ -427,21 +308,9 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         
+    
+
     
 
     
@@ -457,13 +326,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="Sound.html">Sound</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="UIs.Player.html">Player</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Dots.html">Dots</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Jan 29 2024 12:13:40 GMT+0900 (GMT+09:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 10 2024 11:20:44 GMT+0900 (대한민국 표준시)
 </footer>
 
 <script> prettyPrint(); </script>

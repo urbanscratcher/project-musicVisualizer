@@ -6,22 +6,22 @@ import { p5 } from "../../index.js";
  * @memberof Managers
  */
 class SoundManager {
-  /**
-   * Singleton instance
-   */
   static instance;
 
   /**
-   * currently loaded sound file
-   * @type {P5.SoundFile}
+   * currently selected sound
+   * @type {Sound}
    */
   sound = {};
-  isSoundReady = false;
-  duration = 0;
 
   /**
-   * Private constructor to enforce singleton pattern
-   * @private
+   * list of sounds
+   * @type {Sound[]}
+   */
+  soundList = [];
+
+  /**
+   * Enforce singleton pattern
    * @returns {SoundManger}
    */
   constructor() {
@@ -32,38 +32,41 @@ class SoundManager {
     return SoundManager.instance;
   }
 
-  /**
-   * Load a sound and set it in the sounds object.
-   * @param {string} src - The source file path of the sound.
-   */
-  loadSound(src, successCb, errorCb, whileLoadingCb) {
-    const success = () => {
-      this.sound.setVolume(1);
-      this.duration = this.sound.duration();
-      this.isSoundReady = true;
-
-      this.sound.onended(() => {
-        console.log("load ended!");
-      });
-    };
-
-    const error = (err) => {
-      console.error("error - " + err);
-      this.isSoundReady = false;
-    };
-
-    const whileLoading = (prog) => {
-      // TODO draw loading bar...
-      console.log("loading" + prog);
-    };
-
-    this.sound = p5.loadSound(
-      src,
-      successCb || success,
-      errorCb || error,
-      whileLoadingCb || whileLoading
-    );
+  add(sound) {
+    this.soundList.push(sound);
   }
+
+  select(name) {
+    const selected = this.soundList.find((el) => el.name === name);
+    this.loadSound(selected);
+  }
+
+  // Load a sound and set it in the sounds object
+  loadSound(selectedSound) {
+    this.sound = {
+      ...selectedSound,
+      duration: 0,
+      loaded: p5.loadSound(
+        selectedSound.src,
+        this.#onSuccess,
+        this.#onError,
+        this.#onLoading
+      ),
+    };
+  }
+
+  #onLoading = (prog) => {
+    console.log("loading... " + prog);
+  };
+
+  #onError = (err) => {
+    console.error("error - " + err);
+  };
+
+  #onSuccess = () => {
+    this.sound.loaded.setVolume(1);
+    this.sound.duration = this.sound.loaded.duration();
+  };
 }
 
 /**

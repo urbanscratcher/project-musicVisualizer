@@ -8,7 +8,9 @@ import Needles from "./visualizations/Needles.js";
 import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
 import WavePattern from "./visualizations/Wavepattern.js";
-import Test from "./visualizations/Test.js";
+import Dots from "./visualizations/Dots.js";
+import Sound from "./classes/Sound.js";
+import player from "./ui/Player.js";
 
 /**
  * defines p5js lifecycles and events
@@ -18,14 +20,42 @@ import Test from "./visualizations/Test.js";
 export function sketch(p5) {
   p5.preload = function () {
     // preloads a sound before setup
-    soundManager.loadSound(SOUND_SRC);
+
+    // add a list of sounds
+    soundManager.add(
+      new Sound({
+        src: "./assets/ditto.wav",
+        name: "ditto",
+        artist: "newjeans",
+      })
+    );
+    soundManager.add(
+      new Sound({
+        src: "./assets/hype.wav",
+        name: "hype boy",
+        artist: "newjeans",
+      })
+    );
+    soundManager.add(
+      new Sound({
+        src: "./assets/attention.wav",
+        name: "attention",
+        artist: "newjeans",
+      })
+    );
+
+    // select a sound to play
+    soundManager.select("hype boy");
   };
 
   p5.setup = function () {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
+
+    // set default base color
     p5.background(0);
 
     // add visualisations
+    visualManager.add(new Dots());
 
     visualManager.add(new WavePattern());
     visualManager.add(new Spectrum());
@@ -33,17 +63,20 @@ export function sketch(p5) {
     visualManager.add(new RidgePlots(this));
     visualManager.add(new BeatFireworks());
     visualManager.add(new Blocks(this));
-    visualManager.add(new Test());
   };
 
   p5.draw = function () {
-    // keep background black
-    p5.background(0);
+    // set the background color
+    if (visualManager.selectedVisual.name === "dots") {
+      p5.background(255);
+    } else {
+      p5.background(0);
+    }
 
     // draw the selected visualisation
     visualManager.selectedVisual.draw();
 
-    // control gui visibility. show the selected one only.
+    // control gui for custom setting visibility
     visualManager.visuals.forEach((el) => {
       if (el.name === visualManager.selectedVisual.name) {
         el?.gui && el.gui.show();
@@ -52,17 +85,26 @@ export function sketch(p5) {
       }
     });
 
-    // draw the controls on top.
-    controlManager.draw();
+    // draw sound player
+    player.draw();
   };
 
   // [Event Handlers] ---------------------------
-  p5.mouseClicked = () => {
-    controlManager.mousePressed();
+  p5.mouseDragged = () => {
+    player.mouseDragged();
+  };
+
+  p5.mouseReleased = () => {
+    player.mouseReleased();
+  };
+
+  p5.mousePressed = () => {
+    player.mousePressed();
   };
 
   p5.keyPressed = (key) => {
-    controlManager.keyPressed(key);
+    player.keyPressed(key);
+    // controlManager.keyPressed(key);
   };
 
   // Resize canvas to fit if the visualisation needs to be resized call its onResize method

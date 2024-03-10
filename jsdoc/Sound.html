@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: Firework</title>
+    <title>JSDoc: Class: Sound</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: Firework</h1>
+    <h1 class="page-title">Class: Sound</h1>
 
     
 
@@ -28,9 +28,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Firework<span class="signature">(color, x, y)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Sound<span class="signature">(src, name, artist, isReady, duration, loaded)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Firework</div>
+            <div class="class-description">Sound class to represent information of sound to be used in the app</div>
         
     
 </header>
@@ -45,7 +45,7 @@
     
 
     
-    <h4 class="name" id="Firework"><span class="type-signature"></span>new Firework<span class="signature">(color, x, y)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="Sound"><span class="type-signature"></span>new Sound<span class="signature">(src, name, artist, isReady, duration, loaded)</span><span class="type-signature"></span></h4>
     
 
     
@@ -85,13 +85,13 @@
 
         <tr>
             
-                <td class="name"><code>color</code></td>
+                <td class="name"><code>src</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">P5.Color</span>
+<span class="param-type">string</span>
 
 
             
@@ -101,14 +101,83 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">path to the sound file</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>x</code></td>
+                <td class="name"><code>name</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">name of the sound</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>artist</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">artist of the sound</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>isReady</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">flag to determine if the sound is ready to play</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>duration</code></td>
             
 
             <td class="type">
@@ -124,20 +193,20 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">duration of the sound</td>
         </tr>
 
     
 
         <tr>
             
-                <td class="name"><code>y</code></td>
+                <td class="name"><code>loaded</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">number</span>
+<span class="param-type">p5.SoundFile</span>
 
 
             
@@ -147,7 +216,7 @@
 
             
 
-            <td class="description last"></td>
+            <td class="description last">the loaded sound</td>
         </tr>
 
     
@@ -188,7 +257,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_classes_Firework.js.html">src/classes/Firework.js</a>, <a href="src_classes_Firework.js.html#line6">line 6</a>
+        <a href="src_classes_Sound.js.html">src/classes/Sound.js</a>, <a href="src_classes_Sound.js.html#line5">line 5</a>
     </li></ul></dd>
     
 
@@ -233,146 +302,6 @@
 
     
 
-    
-        <h3 class="subsection-title">Members</h3>
-
-        
-            
-<h4 class="name" id="isDepleted"><span class="type-signature"></span>isDepleted<span class="type-signature"> :boolean</span></h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">boolean</span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_classes_Firework.js.html">src/classes/Firework.js</a>, <a href="src_classes_Firework.js.html#line15">line 15</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
-            
-<h4 class="name" id="particles"><span class="type-signature"></span>particles<span class="type-signature"> :Array:<a href="Visualization.Needles.html"></a>.&lt;<a href="Particle.html">Particle</a>:<a href="Visualization.Needles.html"></a>></span></h4>
-
-
-
-
-
-
-    <h5>Type:</h5>
-    <ul>
-        <li>
-            
-<span class="param-type">Array:<a href="Visualization.Needles.html"></a>.&lt;<a href="Particle.html">Particle</a>:<a href="Visualization.Needles.html"></a>></span>
-
-
-        </li>
-    </ul>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="src_classes_Firework.js.html">src/classes/Firework.js</a>, <a href="src_classes_Firework.js.html#line10">line 10</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-        
     
 
     
