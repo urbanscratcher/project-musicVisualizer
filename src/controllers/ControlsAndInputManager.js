@@ -1,6 +1,6 @@
 import { p5 } from "../../index.js";
 import visualManager from "./VisualisationManager.js";
-import PlaybackButton from "../ui/PlaybackButton.js";
+import PlayButton from "../ui/PlayButton.js";
 
 /**
  * @class
@@ -15,7 +15,7 @@ class ControlsAndInputManager {
 
   /**
    * A playback button displayed in the top left of the screen
-   * @type {PlaybackButton}
+   * @type {PlayButton}
    */
   playbackButton;
 
@@ -44,7 +44,7 @@ class ControlsAndInputManager {
    * @param {P5} - p5 instance
    */
   mousePressed() {
-    if (!this.playbackButton?.hitCheck(p5)) {
+    if (!this.playbackButton?.mousePressed(p5)) {
       // const fs = p5.fullscreen();
       // p5.fullscreen(!fs);
     }

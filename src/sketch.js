@@ -1,16 +1,16 @@
+import Sound from "./classes/Sound.js";
 import { SOUND_SRC } from "./constants.js";
 import controlManager from "./controllers/ControlsAndInputManager.js";
 import soundManager from "./controllers/SoundManager.js";
 import visualManager from "./controllers/VisualisationManager.js";
-import Blocks from "./visualizations/Blocks.js";
+import player from "./ui/Player.js";
 import BeatFireworks from "./visualizations/BeatFireworks.js";
+import Blocks from "./visualizations/Blocks.js";
+import Dots from "./visualizations/Dots.js";
 import Needles from "./visualizations/Needles.js";
 import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
 import WavePattern from "./visualizations/Wavepattern.js";
-import Dots from "./visualizations/Dots.js";
-import Sound from "./classes/Sound.js";
-import player from "./ui/Player.js";
 
 /**
  * defines p5js lifecycles and events
@@ -22,6 +22,25 @@ export function sketch(p5) {
     // preloads a sound before setup
 
     // add a list of sounds
+    const sounds = [
+      new Sound({
+        src: "./assets/ditto.wav",
+        name: "ditto",
+        artist: "newjeans",
+      }),
+      new Sound({
+        src: "./assets/hype.wav",
+        name: "hype boy",
+        artist: "newjeans",
+      }),
+      new Sound({
+        src: "./assets/attention.wav",
+        name: "attention",
+        artist: "newjeans",
+      }),
+    ];
+
+    // add sounds to the sound manager
     soundManager.add(
       new Sound({
         src: "./assets/ditto.wav",
@@ -46,6 +65,7 @@ export function sketch(p5) {
 
     // select a sound to play
     soundManager.select("hype boy");
+    soundManager.loadSound();
   };
 
   p5.setup = function () {
@@ -104,7 +124,6 @@ export function sketch(p5) {
 
   p5.keyPressed = (key) => {
     player.keyPressed(key);
-    // controlManager.keyPressed(key);
   };
 
   // Resize canvas to fit if the visualisation needs to be resized call its onResize method

@@ -1,9 +1,9 @@
 import { p5 } from "../../index.js";
 import soundManager from "../controllers/SoundManager.js";
 import visualManager from "../controllers/VisualisationManager.js";
-import PlayBackwardButton from "./PlayBackwardButton.js";
-import PlayForwardButton from "./PlayForwardButton.js";
-import PlaybackButton from "./PlaybackButton.js";
+import PlayPrevButton from "./PlayPrevButton.js";
+import PlayNextButton from "./PlayNextButton.js";
+import PlayButton from "./PlayButton.js";
 import Playlist from "./Playlist.js";
 import PlaylistButton from "./PlaylistButton.js";
 import ProgressBar from "./ProgressBar.js";
@@ -29,19 +29,19 @@ class Player {
    */
   constructor() {
     // initialize ui elements
-    this.playBackwardButton = new PlayBackwardButton(
+    this.playBackwardButton = new PlayPrevButton(
       this.x + 10,
       this.y + 100,
       18,
       18
     );
-    this.playbackButton = new PlaybackButton(
+    this.playbackButton = new PlayButton(
       this.x + this.width / 2 - 9,
       this.y + 100,
       18,
       18
     );
-    this.playForwardButton = new PlayForwardButton(
+    this.playForwardButton = new PlayNextButton(
       this.x + this.width - 28,
       this.y + 100,
       18,
@@ -90,7 +90,7 @@ class Player {
     p5.textSize(30);
     p5.text(soundManager.sound.name || "-", this.x + 10, this.y + 45);
 
-    if (soundManager.sound?.loaded.duration() > 0) {
+    if (soundManager.sound?.isReady) {
       // progress bar -----------------------
       // draw a song progress bar
       this.playBar.draw();
@@ -182,12 +182,9 @@ class Player {
     // click playlist -------------
     if (this.playlistButton.openList && this.playlist.isMouseIn()) {
       // select a song from the playlist
-      const playlistItem = this.playlist.getClickedItem();
+      const playlistItem = this.playlist.mousePressed();
       if (playlistItem?.name) {
-        // stop current sound
-        soundManager.sound.loaded.stop();
         this.playbackButton.playing = false;
-        soundManager.select(playlistItem.name);
       }
     }
 
@@ -224,8 +221,10 @@ class Player {
       }
     }
 
-    // click playback button ------------------------------------
-    this.playbackButton.hitCheck();
+    // click play, forward, backward buttons ------------------------------------
+    this.playbackButton.mousePressed();
+    this.playForwardButton.mousePressed();
+    this.playBackwardButton.mousePressed();
 
     // toggle between playlist and visualist buttons -------------
     if (!this.playlistButton.openList && !this.vislistButton.openList) {
@@ -256,7 +255,17 @@ class Player {
     }
   }
 
-  keyPressed() {}
+  /**
+   * responds to key press events
+   * @param {number} key - the ascii code of the keypressed
+   */
+  keyPressed(key) {
+    const KEYCODE_SPACEBAR = 32;
+
+    if (soundManager.sound?.isReady && key.keyCode === KEYCODE_SPACEBAR) {
+      this.playbackButton.playOrPause();
+    }
+  }
 
   // helper methods ------------------------
   // format time text to min:sec

@@ -1,16 +1,15 @@
 import { p5 } from "../../index.js";
+import Button from "./Button.js";
+import soundManager from "../controllers/SoundManager.js";
 
 /**
  * @class
  * @classdesc A class to represent the play forward button
  * @memberof UIs
  */
-class PlayBackwardButton {
+class PlayPrevButton extends Button {
   constructor(x, y, width, height) {
-    this.x = x || 20;
-    this.y = y || 20;
-    this.width = width || 20;
-    this.height = height || 20;
+    super(x, y, width, height);
   }
 
   /**
@@ -29,12 +28,14 @@ class PlayBackwardButton {
   }
 
   /**
-   * update the location of the button
+   * mouse pressed event handler that plays the previous song
    */
-  updateLocation(x, y) {
-    this.x = x;
-    this.y = y;
+  mousePressed() {
+    if (this.isMouseIn()) {
+      soundManager.selectPrevious();
+      soundManager.loadSound();
+    }
   }
 }
 
-export default PlayBackwardButton;
+export default PlayPrevButton;

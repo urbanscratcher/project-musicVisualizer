@@ -1,4 +1,5 @@
 import { p5 } from "../../index.js";
+import soundManager from "../controllers/SoundManager.js";
 import Button from "./Button.js";
 
 /**
@@ -6,7 +7,7 @@ import Button from "./Button.js";
  * @classdesc A class to represent the play forward button
  * @memberof UIs
  */
-class PlayForwardButton extends Button {
+class PlayNextButton extends Button {
   constructor(x, y, width, height) {
     super(x, y, width, height);
   }
@@ -30,6 +31,16 @@ class PlayForwardButton extends Button {
       this.height
     );
   }
+
+  /**
+   * mouse pressed event handler that plays the next song
+   */
+  mousePressed() {
+    if (this.isMouseIn()) {
+      soundManager.selectNext();
+      soundManager.loadSound();
+    }
+  }
 }
 
-export default PlayForwardButton;
+export default PlayNextButton;

@@ -22,7 +22,7 @@ class Playlist extends Button {
     p5.rect(this.x, this.y, this.width, this.height, 0, 0, 4, 4);
 
     soundList.forEach((s, i) => {
-      if (s.name === soundManager.sound.name) {
+      if (s.name === soundManager.selectedSound.name) {
         p5.fill("black");
         p5.rect(this.x, this.y + 20 * i + 6, this.width, 20);
 
@@ -47,9 +47,8 @@ class Playlist extends Button {
   /**
    * @returns {Sound} the clicked sound
    */
-  getClickedItem() {
-    const soundList = soundManager.soundList;
-    return soundList.find((s, i) => {
+  mousePressed() {
+    const item = soundManager.soundList.find((s, i) => {
       if (
         p5.mouseX > this.x &&
         p5.mouseX < this.x + this.width &&
@@ -59,6 +58,12 @@ class Playlist extends Button {
         return s;
       }
     });
+
+    if (item) {
+      soundManager.select(item.name);
+      soundManager.loadSound();
+    }
+    return item;
   }
 }
 
