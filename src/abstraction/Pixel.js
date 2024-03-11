@@ -10,7 +10,7 @@ class Pixel {
     this.h = h;
     this.color = color;
 
-    this.speed = 0.1;
+    this.speed = 0.4;
   }
 
   draw() {

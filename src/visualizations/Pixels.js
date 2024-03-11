@@ -1,11 +1,11 @@
 import { p5 } from "../../index.js";
-import BeatVisualization from "../classes/BeatVisualization.js";
-import Pixel from "../classes/Pixel.js";
+import BeatVisualization from "../abstraction/BeatVisualization.js";
+import Pixel from "../abstraction/Pixel.js";
 import { fourier } from "../globals.js";
 
 class Pixels extends BeatVisualization {
   constructor() {
-    super("pixels");
+    super("noise pixels");
 
     this.columnLen = 64;
     this.rowLen = 64;
@@ -92,11 +92,13 @@ class Pixels extends BeatVisualization {
         }
       }
 
+      // reset the pixels if the average energy is high
       if (averageEnergy > 210 && i % 6 === 0) {
         pixel.color = p5.color(0, 255, 255);
         pixel.reset();
       }
 
+      // draw the pixels
       pixel.draw();
     });
   }

@@ -27,6 +27,7 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
+import BeatVisualization from "../classes/BeatVisualization.js";
 import Visualization from "../classes/Visualization.js";
 import { fourier, generateGui } from "../globals.js";
 
@@ -35,7 +36,7 @@ import { fourier, generateGui } from "../globals.js";
  * @extends Visualization
  * @memberof Visualization
  */
-class Blocks extends Visualization {
+class Blocks extends BeatVisualization {
   noiseStep = 0.01;
   prog = 0;
   rot = 0;
@@ -69,40 +70,68 @@ class Blocks extends Visualization {
       seedThreshMin: 0,
       seedThreshMax: 255,
       seedThreshStep: 1,
-      blockColor: [255, 0, 0],
-      lineColor: [0, 255, 0],
+      blockColor: [200, 200, 200],
+      lineColor: [0, 0, 0],
     };
     this.gui = generateGui(sketch);
     this.gui.addObject(this.params);
   }
 
   draw() {
-    fourier.analyze();
+    const spectrum = fourier.analyze();
     const bassEnergy = fourier.getEnergy("bass");
     const trebleEnergy = fourier.getEnergy("treble");
 
     p5.push();
     p5.angleMode(p5.RADIANS);
-    this.roatingBlocks(bassEnergy);
+    this.roatingBlocks(bassEnergy, spectrum);
     this.noiseLine(bassEnergy, trebleEnergy);
     p5.pop();
   }
 
-  roatingBlocks(energy) {
-    if (energy &lt; this.params.rotThresh) {
+  /**
+   * draw rotating blocks
+   * @param {number} energy
+   * @param {FFT} spectrum
+   */
+  roatingBlocks(energy, spectrum) {
+    // define the shape of the blocks
+    const blockSize = p5.map(energy, 0, 255, 10, 100);
+    const increment = p5.width / 9;
+
+    // define color of the blocks
+    let blockColor = p5.color(this.params.blockColor);
+
+    // rotate the blocks if beat is detected
+    if (this.detectBeat(spectrum)) {
       this.rot += this.params.rotSpeed;
     }
 
-    const blockSize = p5.map(energy, 0, 255, 20, 100);
-    const increment = p5.width / 9;
-
+    // draw the blocks
     p5.push();
+    p5.noStroke();
     p5.rectMode(p5.CENTER);
     p5.translate(p5.width / 2, p5.height / 2);
     p5.rotate(this.rot);
-    p5.fill(this.params.blockColor);
+    p5.fill(blockColor);
+
     for (let i = 0; i &lt; 10; i++) {
       p5.rect(i * increment - p5.width / 2, 0, blockSize, blockSize);
+
+      for (let j = 0; j &lt; 10; j++) {
+        p5.rect(
+          i * increment - p5.width / 2,
+          increment * j,
+          blockSize,
+          blockSize
+        );
+        p5.rect(
+          i * increment - p5.width / 2,
+          -increment * j,
+          blockSize,
+          blockSize
+        );
+      }
     }
     p5.pop();
   }
@@ -156,13 +185,13 @@ export default Blocks;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="Sound.html">Sound</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="UIs.Player.html">Player</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Dots.html">Dots</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Managers.exports.SoundManager.html">exports.SoundManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="Sound.html">Sound</a></li><li><a href="UIs.Button.html">Button</a></li><li><a href="UIs.PlayButton.html">PlayButton</a></li><li><a href="UIs.PlayNextButton.html">PlayNextButton</a></li><li><a href="UIs.PlayPrevButton.html">PlayPrevButton</a></li><li><a href="UIs.Player.html">Player</a></li><li><a href="UIs.Playlist.html">Playlist</a></li><li><a href="UIs.PlaylistButton.html">PlaylistButton</a></li><li><a href="UIs.ProgressBar.html">ProgressBar</a></li><li><a href="UIs.Vislist.html">Vislist</a></li><li><a href="UIs.VislistButton.html">VislistButton</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.BeatVisualization.html">BeatVisualization</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.SpectrumDots.html">SpectrumDots</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 10 2024 11:20:44 GMT+0900 (대한민국 표준시)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 11 2024 19:53:51 GMT+0900 (대한민국 표준시)
 </footer>
 
 <script> prettyPrint(); </script>

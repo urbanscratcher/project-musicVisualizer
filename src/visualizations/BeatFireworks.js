@@ -1,9 +1,9 @@
 import { p5 } from "../../index.js";
-import BeatVisualization from "../classes/BeatVisualization.js";
-import Firework from "../classes/Firework.js";
-import Fireworks from "../classes/Fireworks.js";
-import Particle from "../classes/Particle.js";
-import Visualization from "../classes/Visualization.js";
+import BeatVisualization from "../abstraction/BeatVisualization.js";
+import Firework from "../abstraction/Firework.js";
+import Fireworks from "../abstraction/Fireworks.js";
+import Particle from "../abstraction/Particle.js";
+import Visualization from "../abstraction/Visualization.js";
 import { fourier } from "../globals.js";
 import { sketch } from "../sketch.js";
 
@@ -15,7 +15,7 @@ import { sketch } from "../sketch.js";
  */
 class BeatFireworks extends BeatVisualization {
   constructor() {
-    super("beat fireworks");
+    super("firework beats");
     this.fireworks = new Fireworks();
   }
 

@@ -1,9 +1,8 @@
-import Sound from "./classes/Sound.js";
+import Sound from "./abstraction/Sound.js";
 import { SOUND_SRC } from "./constants.js";
-import controlManager from "./controllers/ControlsAndInputManager.js";
 import soundManager from "./controllers/SoundManager.js";
 import visualManager from "./controllers/VisualisationManager.js";
-import player from "./ui/Player.js";
+import player from "./uis/Player.js";
 import BeatFireworks from "./visualizations/BeatFireworks.js";
 import Blocks from "./visualizations/Blocks.js";
 import Circular from "./visualizations/Circular.js";
@@ -21,7 +20,7 @@ import WavePattern from "./visualizations/Wavepattern.js";
  */
 export function sketch(p5) {
   p5.preload = function () {
-    // preloads a sound before setup ------
+    // preloads a sound before setup -------------
     // add a list of sounds
     const sounds = [
       new Sound({
@@ -41,6 +40,7 @@ export function sketch(p5) {
       }),
     ];
 
+    // add sounds to the sound manager
     sounds.forEach((sound) => {
       soundManager.add(sound);
     });
@@ -54,15 +54,15 @@ export function sketch(p5) {
     p5.createCanvas(p5.windowWidth, p5.windowHeight);
 
     // set default base color
-    p5.background(0);
+    p5.background(255);
 
     // add visualisations
-    visualManager.add(new Circular());
-    visualManager.add(new Pixels());
-    visualManager.add(new Blocks(this));
     visualManager.add(new SpectrumDots());
-    visualManager.add(new Needles());
+    visualManager.add(new Pixels());
+    visualManager.add(new Circular());
+    visualManager.add(new Blocks(this));
     visualManager.add(new BeatFireworks());
+    visualManager.add(new Needles());
     visualManager.add(new Spectrum());
     visualManager.add(new WavePattern());
     visualManager.add(new RidgePlots(this));

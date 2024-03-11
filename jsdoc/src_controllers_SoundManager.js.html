@@ -37,16 +37,27 @@ class SoundManager {
   static instance;
 
   /**
-   * currently selected sound
+   * sound to potentially be played
    * @type {Sound}
    */
   sound = {};
+
+  /**
+   * currently selected sound
+   * @type {Sound}
+   */
+  selectedSound = {};
 
   /**
    * list of sounds
    * @type {Sound[]}
    */
   soundList = [];
+
+  /**
+   * check if sound is loaded and ready to play
+   */
+  isReady = false;
 
   /**
    * Enforce singleton pattern
@@ -60,49 +71,94 @@ class SoundManager {
     return SoundManager.instance;
   }
 
+  /**
+   * add song to the sound list
+   * @param {Sound} sound
+   */
   add(sound) {
     this.soundList.push(sound);
   }
 
+  /**
+   * select a sound from the sound list
+   * @param {string} name
+   */
   select(name) {
-    const selected = this.soundList.find((el) => el.name === name);
-    this.loadSound(selected);
+    this.selectedSound = this.soundList.find((el) => el.name === name);
   }
 
-  // Load a sound and set it in the sounds object
-  loadSound(selectedSound) {
-    this.sound = {
-      ...selectedSound,
-      isReady: false,
-      duration: 0,
-      loaded: p5.loadSound(
-        selectedSound.src,
-        this.#onSuccess,
-        this.#onError,
-        this.#onLoading
-      ),
-    };
+  /**
+   * select a next sound from the sound list
+   */
+  selectNext() {
+    const currentIndex = this.soundList.findIndex(
+      (el) => el.name === this.sound.name
+    );
+    const nextIndex = (currentIndex + 1) % this.soundList.length;
+    this.selectedSound = this.soundList[nextIndex];
   }
 
+  /**
+   * select a previous sound from the sound list
+   */
+  selectPrevious() {
+    const currentIndex = this.soundList.findIndex(
+      (el) => el.name === this.sound.name
+    );
+    const previousIndex =
+      (currentIndex - 1 + this.soundList.length) % this.soundList.length;
+    this.selectedSound = this.soundList[previousIndex];
+  }
+
+  /**
+   * load sound using p5 sound library, and set the sound property. return promise wrapping the loaded sound
+   */
+  loadSound() {
+    this.sound.isReady = false;
+    p5.loadSound(
+      this.selectedSound.src,
+      this.#onSuccess,
+      this.#onError,
+      this.#onLoading
+    );
+  }
+
+  // log progress of sound loading
   #onLoading = (prog) => {
-    // TODO: draw loading progress
-    console.log("loading" + prog);
-  };
-
-  #onError = (err) => {
-    console.error("error - " + err);
+    console.log("loading... " + prog);
     this.sound.isReady = false;
   };
 
-  #onSuccess = () => {
-    this.sound.loaded.setVolume(1);
-    this.sound.duration = this.sound.loaded.duration();
-    this.sound.isReady = true;
-
-    this.sound.loaded.onended(() => {
-      console.log("sound load ended!");
-    });
+  // log error if sound fails to load
+  #onError = (err) => {
+    console.error("error... " + err);
+    this.sound.isReady = false;
   };
+
+  // set the loaded sound to the sound property
+  #onSuccess = (loadedSound) => {
+    if (this.sound?.loaded) {
+      this.sound.loaded.stop();
+    }
+
+    this.sound = {
+      ...this.selectedSound,
+      duration: loadedSound.duration(),
+      isReady: true,
+      loaded: loadedSound,
+    };
+
+    this.sound.loaded.setVolume(1);
+    this.sound.loaded.loop();
+  };
+
+  // play the sound
+  loop() {
+    if (this.sound.isReady &amp;&amp; this.sound.loaded) {
+      this.sound.loaded.setVolume(1);
+      this.sound.loaded.loop();
+    }
+  }
 }
 
 /**
@@ -121,13 +177,13 @@ export default soundManager;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="Sound.html">Sound</a></li><li><a href="UIs.PlaybackButton.html">PlaybackButton</a></li><li><a href="UIs.Player.html">Player</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Dots.html">Dots</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Managers.exports.SoundManager.html">exports.SoundManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="Sound.html">Sound</a></li><li><a href="UIs.Button.html">Button</a></li><li><a href="UIs.PlayButton.html">PlayButton</a></li><li><a href="UIs.PlayNextButton.html">PlayNextButton</a></li><li><a href="UIs.PlayPrevButton.html">PlayPrevButton</a></li><li><a href="UIs.Player.html">Player</a></li><li><a href="UIs.Playlist.html">Playlist</a></li><li><a href="UIs.PlaylistButton.html">PlaylistButton</a></li><li><a href="UIs.ProgressBar.html">ProgressBar</a></li><li><a href="UIs.Vislist.html">Vislist</a></li><li><a href="UIs.VislistButton.html">VislistButton</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.BeatVisualization.html">BeatVisualization</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.SpectrumDots.html">SpectrumDots</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Sun Mar 10 2024 11:20:44 GMT+0900 (대한민국 표준시)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 11 2024 19:53:51 GMT+0900 (대한민국 표준시)
 </footer>
 
 <script> prettyPrint(); </script>

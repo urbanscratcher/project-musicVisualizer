@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: src/controllers/SoundManager.1.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: src/controllers/SoundManager.1.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { p5 } from "../../index.js";
+
+/**
+ * @class
+ * @classdesc sound manager. singleton.
+ * @memberof Managers
+ */
+export class SoundManager {
+  static instance;
+
+  /**
+   * sound to potentially be played
+   * @type {Sound}
+   */
+  sound = {};
+
+  /**
+   * currently selected sound
+   * @type {Sound}
+   */
+  selectedSound = {};
+
+  /**
+   * list of sounds
+   * @type {Sound[]}
+   */
+  soundList = [];
+
+  /**
+   * check if sound is loaded and ready to play
+   */
+  isReady = false;
+
+  /**
+   * Enforce singleton pattern
+   * @returns {SoundManger}
+   */
+  constructor() {
+    if (!SoundManager.instance) {
+      SoundManager.instance = this;
+    }
+
+    return SoundManager.instance;
+  }
+
+  /**
+   * add song to the sound list
+   * @param {Sound} sound
+   */
+  add(sound) {
+    this.soundList.push(sound);
+  }
+
+  /**
+   * select a sound from the sound list
+   * @param {string} name
+   */
+  select(name) {
+    this.selectedSound = this.soundList.find((el) => el.name === name);
+  }
+
+  /**
+   * select a next sound from the sound list
+   */
+  selectNext() {
+    const currentIndex = this.soundList.findIndex(
+      (el) => el.name === this.sound.name
+    );
+    const nextIndex = (currentIndex + 1) % this.soundList.length;
+    this.selectedSound = this.soundList[nextIndex];
+  }
+
+  /**
+   * select a previous sound from the sound list
+   */
+  selectPrevious() {
+    const currentIndex = this.soundList.findIndex(
+      (el) => el.name === this.sound.name
+    );
+    const previousIndex =
+      (currentIndex - 1 + this.soundList.length) % this.soundList.length;
+    this.selectedSound = this.soundList[previousIndex];
+  }
+
+  /**
+   * load sound using p5 sound library, and set the sound property. return promise wrapping the loaded sound
+   */
+  loadSound() {
+    this.sound.isReady = false;
+    p5.loadSound(
+      this.selectedSound.src,
+      this.#onSuccess,
+      this.#onError,
+      this.#onLoading
+    );
+  }
+
+  #onLoading = (prog) => {
+    console.log("loading... " + prog);
+    this.sound.isReady = false;
+  };
+
+  #onError = (err) => {
+    console.error("error... " + err);
+    this.sound.isReady = false;
+  };
+
+  #onSuccess = (loadedSound) => {
+    if (this.sound?.loaded) {
+      this.sound.loaded.stop();
+    }
+
+    this.sound = {
+      ...this.selectedSound,
+      loaded: loadedSound,
+      duration: loadedSound.duration(),
+    };
+
+    this.sound.isReady = true;
+
+    console.log(this.sound.isReady);
+    if (this.sound.isReady &amp;&amp; this.sound.loaded) {
+      this.sound.loaded.setVolume(1);
+      this.sound.loaded.loop();
+    }
+  };
+
+  loop() {
+    if (this.sound.isReady &amp;&amp; this.sound.loaded) {
+      this.sound.loaded.setVolume(1);
+      this.sound.loaded.loop();
+    }
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="Managers.html">Managers</a></li><li><a href="UIs.html">UIs</a></li><li><a href="Visualization.html">Visualization</a></li></ul><h3>Classes</h3><ul><li><a href="Firework.html">Firework</a></li><li><a href="Fireworks.html">Fireworks</a></li><li><a href="Managers.ControlsAndInputManager.html">ControlsAndInputManager</a></li><li><a href="Managers.SoundManager.html">SoundManager</a></li><li><a href="Managers.VisualizationManager.html">VisualizationManager</a></li><li><a href="Managers.exports.SoundManager.html">exports.SoundManager</a></li><li><a href="Particle.html">Particle</a></li><li><a href="Sound.html">Sound</a></li><li><a href="UIs.Button.html">Button</a></li><li><a href="UIs.PlayButton.html">PlayButton</a></li><li><a href="UIs.PlayNextButton.html">PlayNextButton</a></li><li><a href="UIs.PlayPrevButton.html">PlayPrevButton</a></li><li><a href="UIs.Player.html">Player</a></li><li><a href="UIs.Playlist.html">Playlist</a></li><li><a href="UIs.PlaylistButton.html">PlaylistButton</a></li><li><a href="UIs.ProgressBar.html">ProgressBar</a></li><li><a href="UIs.Vislist.html">Vislist</a></li><li><a href="UIs.VislistButton.html">VislistButton</a></li><li><a href="Visualization.BeatFireworks.html">BeatFireworks</a></li><li><a href="Visualization.BeatVisualization.html">BeatVisualization</a></li><li><a href="Visualization.Blocks.html">Blocks</a></li><li><a href="Visualization.Needles.html">Needles</a></li><li><a href="Visualization.RidgePlots.html">RidgePlots</a></li><li><a href="Visualization.Spectrum.html">Spectrum</a></li><li><a href="Visualization.SpectrumDots.html">SpectrumDots</a></li><li><a href="Visualization.WavePattern.html">WavePattern</a></li></ul><h3>Global</h3><ul><li><a href="global.html#controlsManager">controlsManager</a></li><li><a href="global.html#fourier">fourier</a></li><li><a href="global.html#generateGui">generateGui</a></li><li><a href="global.html#p5Instance">p5Instance</a></li><li><a href="global.html#player">player</a></li><li><a href="global.html#sketch">sketch</a></li><li><a href="global.html#soundManager">soundManager</a></li><li><a href="global.html#visualManager">visualManager</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Mon Mar 11 2024 19:53:51 GMT+0900 (대한민국 표준시)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

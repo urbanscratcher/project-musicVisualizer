@@ -1,5 +1,5 @@
 import { p5 } from "../../index.js";
-import Visualization from "../classes/Visualization.js";
+import Visualization from "../abstraction/Visualization.js";
 import { fourier } from "../globals.js";
 
 /**
@@ -32,6 +32,8 @@ class WavePattern extends Visualization {
         (prev, curr, currIdx, arr) => prev + (curr - avg) * (curr - avg)
       ) / waveform.length
     );
+
+    // maps the average and standard deviation values to the canvas
     const avgMapped = p5.map(avg, -1, 1, 1, 7);
     const stdMapped = p5.map(std, 0, 3, 1, 25);
     p5.strokeWeight(stdMapped);

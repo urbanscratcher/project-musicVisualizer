@@ -1,5 +1,5 @@
 import { p5 } from "../../index.js";
-import Visualization from "../classes/Visualization.js";
+import Visualization from "../abstraction/Visualization.js";
 import { fourier } from "../globals.js";
 
 /**

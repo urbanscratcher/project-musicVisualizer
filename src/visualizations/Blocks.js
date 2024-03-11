@@ -1,6 +1,6 @@
 import { p5 } from "../../index.js";
-import BeatVisualization from "../classes/BeatVisualization.js";
-import Visualization from "../classes/Visualization.js";
+import BeatVisualization from "../abstraction/BeatVisualization.js";
+import Visualization from "../abstraction/Visualization.js";
 import { fourier, generateGui } from "../globals.js";
 
 /**

@@ -95,16 +95,19 @@ class SoundManager {
     );
   }
 
+  // log progress of sound loading
   #onLoading = (prog) => {
     console.log("loading... " + prog);
     this.sound.isReady = false;
   };
 
+  // log error if sound fails to load
   #onError = (err) => {
     console.error("error... " + err);
     this.sound.isReady = false;
   };
 
+  // set the loaded sound to the sound property
   #onSuccess = (loadedSound) => {
     if (this.sound?.loaded) {
       this.sound.loaded.stop();
@@ -118,9 +121,10 @@ class SoundManager {
     };
 
     this.sound.loaded.setVolume(1);
-    // this.sound.loaded.loop();
+    this.sound.loaded.loop();
   };
 
+  // play the sound
   loop() {
     if (this.sound.isReady && this.sound.loaded) {
       this.sound.loaded.setVolume(1);
