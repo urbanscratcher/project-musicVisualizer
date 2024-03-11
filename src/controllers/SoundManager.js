@@ -118,7 +118,7 @@ class SoundManager {
     };
 
     this.sound.loaded.setVolume(1);
-    this.sound.loaded.loop();
+    // this.sound.loaded.loop();
   };
 
   loop() {

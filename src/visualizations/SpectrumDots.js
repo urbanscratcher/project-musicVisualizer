@@ -45,11 +45,11 @@ class SpectrumDots extends Visualization {
     }));
 
     // draw the dots
-    p5.noStroke();
 
     arr.forEach((el, i) => {
       el.colArr.forEach((p, j) => {
         p5.push();
+        p5.noStroke();
 
         // map the energy value to the color of the dots
         const energy = p5.map(p.energy, 0, 255, 0, 1);

@@ -6,7 +6,9 @@ import visualManager from "./controllers/VisualisationManager.js";
 import player from "./ui/Player.js";
 import BeatFireworks from "./visualizations/BeatFireworks.js";
 import Blocks from "./visualizations/Blocks.js";
+import Circular from "./visualizations/Circular.js";
 import Needles from "./visualizations/Needles.js";
+import Pixels from "./visualizations/Pixels.js";
 import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
 import SpectrumDots from "./visualizations/SpectrumDots.js";
@@ -55,6 +57,8 @@ export function sketch(p5) {
     p5.background(0);
 
     // add visualisations
+    visualManager.add(new Circular());
+    visualManager.add(new Pixels());
     visualManager.add(new Blocks(this));
     visualManager.add(new SpectrumDots());
     visualManager.add(new Needles());
