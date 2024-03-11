@@ -7,7 +7,7 @@ import Button from "./Button.js";
  * @memberof UIs
  */
 class PlaylistButton extends Button {
-  openList = true;
+  openList = false;
 
   constructor(x, y, width, height) {
     super(x, y, (width = 85), (height = 25));

@@ -1,4 +1,5 @@
 import { p5 } from "../../index.js";
+import BeatVisualization from "../classes/BeatVisualization.js";
 import Visualization from "../classes/Visualization.js";
 import { fourier, generateGui } from "../globals.js";
 
@@ -7,7 +8,7 @@ import { fourier, generateGui } from "../globals.js";
  * @extends Visualization
  * @memberof Visualization
  */
-class Blocks extends Visualization {
+class Blocks extends BeatVisualization {
   noiseStep = 0.01;
   prog = 0;
   rot = 0;
@@ -41,40 +42,68 @@ class Blocks extends Visualization {
       seedThreshMin: 0,
       seedThreshMax: 255,
       seedThreshStep: 1,
-      blockColor: [255, 0, 0],
-      lineColor: [0, 255, 0],
+      blockColor: [200, 200, 200],
+      lineColor: [0, 0, 0],
     };
     this.gui = generateGui(sketch);
     this.gui.addObject(this.params);
   }
 
   draw() {
-    fourier.analyze();
+    const spectrum = fourier.analyze();
     const bassEnergy = fourier.getEnergy("bass");
     const trebleEnergy = fourier.getEnergy("treble");
 
     p5.push();
     p5.angleMode(p5.RADIANS);
-    this.roatingBlocks(bassEnergy);
+    this.roatingBlocks(bassEnergy, spectrum);
     this.noiseLine(bassEnergy, trebleEnergy);
     p5.pop();
   }
 
-  roatingBlocks(energy) {
-    if (energy < this.params.rotThresh) {
+  /**
+   * draw rotating blocks
+   * @param {number} energy
+   * @param {FFT} spectrum
+   */
+  roatingBlocks(energy, spectrum) {
+    // define the shape of the blocks
+    const blockSize = p5.map(energy, 0, 255, 10, 100);
+    const increment = p5.width / 9;
+
+    // define color of the blocks
+    let blockColor = p5.color(this.params.blockColor);
+
+    // rotate the blocks if beat is detected
+    if (this.detectBeat(spectrum)) {
       this.rot += this.params.rotSpeed;
     }
 
-    const blockSize = p5.map(energy, 0, 255, 20, 100);
-    const increment = p5.width / 9;
-
+    // draw the blocks
     p5.push();
+    p5.noStroke();
     p5.rectMode(p5.CENTER);
     p5.translate(p5.width / 2, p5.height / 2);
     p5.rotate(this.rot);
-    p5.fill(this.params.blockColor);
+    p5.fill(blockColor);
+
     for (let i = 0; i < 10; i++) {
       p5.rect(i * increment - p5.width / 2, 0, blockSize, blockSize);
+
+      for (let j = 0; j < 10; j++) {
+        p5.rect(
+          i * increment - p5.width / 2,
+          increment * j,
+          blockSize,
+          blockSize
+        );
+        p5.rect(
+          i * increment - p5.width / 2,
+          -increment * j,
+          blockSize,
+          blockSize
+        );
+      }
     }
     p5.pop();
   }

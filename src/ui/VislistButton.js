@@ -7,7 +7,7 @@ import Button from "./Button.js";
  * @memberof UIs
  */
 class VislistButton extends Button {
-  openList = false;
+  openList = true;
 
   constructor(x, y, width, height) {
     super(x, y, (width = 85), (height = 25));

@@ -6,10 +6,10 @@ import visualManager from "./controllers/VisualisationManager.js";
 import player from "./ui/Player.js";
 import BeatFireworks from "./visualizations/BeatFireworks.js";
 import Blocks from "./visualizations/Blocks.js";
-import Dots from "./visualizations/Dots.js";
 import Needles from "./visualizations/Needles.js";
 import RidgePlots from "./visualizations/RidgePlots.js";
 import Spectrum from "./visualizations/Spectrum.js";
+import SpectrumDots from "./visualizations/SpectrumDots.js";
 import WavePattern from "./visualizations/Wavepattern.js";
 
 /**
@@ -44,7 +44,7 @@ export function sketch(p5) {
     });
 
     // select a sound to play
-    soundManager.select("hype boy");
+    soundManager.select("ditto");
     soundManager.loadSound();
   };
 
@@ -55,21 +55,26 @@ export function sketch(p5) {
     p5.background(0);
 
     // add visualisations
-    visualManager.add(new Dots());
-    visualManager.add(new WavePattern());
-    visualManager.add(new Spectrum());
-    visualManager.add(new Needles());
-    visualManager.add(new RidgePlots(this));
-    visualManager.add(new BeatFireworks());
     visualManager.add(new Blocks(this));
+    visualManager.add(new SpectrumDots());
+    visualManager.add(new Needles());
+    visualManager.add(new BeatFireworks());
+    visualManager.add(new Spectrum());
+    visualManager.add(new WavePattern());
+    visualManager.add(new RidgePlots(this));
   };
 
   p5.draw = function () {
     // set the background color
-    if (visualManager.selectedVisual.name === "dots") {
-      p5.background(255);
-    } else {
-      p5.background(0);
+    switch (visualManager.selectedVisual.name) {
+      case "spectrum dots":
+        p5.background(241, 234, 222);
+        break;
+      case "ridge plots":
+        p5.background(0);
+        break;
+      default:
+        p5.background(255);
     }
 
     // draw the selected visualisation

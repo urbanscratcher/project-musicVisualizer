@@ -4,19 +4,15 @@ import Particle from "./Particle.js";
  * Firework
  */
 class Firework {
+  x;
+  y;
+  color;
+
   /**
    * @type {Particle[]}
    */
   particles = [];
-
-  /**
-   * @type {boolean}
-   */
   isDepleted = false;
-
-  #x;
-  #y;
-  #color;
 
   /**
    *
@@ -25,9 +21,9 @@ class Firework {
    * @param {number} y
    */
   constructor(color, x, y) {
-    this.#color = color;
-    this.#x = x;
-    this.#y = y;
+    this.color = color;
+    this.x = x;
+    this.y = y;
 
     const ANGLE_FULL = 360;
     const NUM = 20;
@@ -36,7 +32,7 @@ class Firework {
 
     for (let angle = 0; angle < ANGLE_FULL; angle += ANGLE_BTW) {
       this.particles.push(
-        new Particle(this.#x, this.#y, this.#color, angle, SPEED_INIT)
+        new Particle(this.x, this.y, this.color, angle, SPEED_INIT)
       );
     }
   }

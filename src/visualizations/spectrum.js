@@ -24,9 +24,12 @@ class Spectrum extends Visualization {
       const w = p5.map(amp, 0, 255, 0, p5.width);
       const h = p5.height / binLength;
 
-      // fade the color of the bin from green to red
-      const green = p5.map(amp, 0, 255, 255, 0);
-      p5.fill(amp, green, 0);
+      // draw bars with black and white color based on the amplitude value
+      if (amp > 150) {
+        p5.fill("black");
+      } else {
+        p5.fill("gray");
+      }
       p5.rect(x, y, w, h);
     });
 

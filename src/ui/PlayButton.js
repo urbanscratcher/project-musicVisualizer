@@ -59,7 +59,7 @@ class PlayButton extends Button {
     if (loadedSound.isPlaying()) {
       loadedSound.pause();
     } else {
-      loadedSound.loop();
+      soundManager.loop();
     }
     this.playing = !this.playing;
   }

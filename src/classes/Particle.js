@@ -45,8 +45,18 @@ class Particle {
    * renders a particle
    */
   #render(x, y, size, color) {
+    p5.push();
+    p5.noStroke();
+
+    // disappearing efffect based on the speed
+    const dynamicAlpha = p5.map(this.speed, 0, 10, 0, 255);
+    color.setAlpha(dynamicAlpha);
+
+    const dynamicSize = p5.map(this.speed, 0, 10, 0, size);
+
     p5.fill(color);
-    p5.ellipse(x, y, size, size);
+    p5.circle(x, y, dynamicSize);
+    p5.pop();
   }
 
   /**

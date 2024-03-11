@@ -26,11 +26,7 @@ class Fireworks {
    * add a random firework
    */
   spawnRandom() {
-    const color = p5.color(
-      p5.random(0, 255),
-      p5.random(0, 255),
-      p5.random(0, 255)
-    );
+    const color = p5.color(p5.random(0, 255));
     const x = p5.random(p5.width * 0.2, p5.width * 0.8);
     const y = p5.random(p5.height * 0.2, p5.height * 0.8);
 
@@ -47,6 +43,9 @@ class Fireworks {
     this.fireworks.push(new Firework(color, x, y));
   }
 
+  /**
+   * remove depleted fireworks
+   */
   #update() {
     this.fireworks.forEach((el, i) => {
       if (el.isDepleted) {

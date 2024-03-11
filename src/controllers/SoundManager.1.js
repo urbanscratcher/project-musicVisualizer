@@ -5,7 +5,7 @@ import { p5 } from "../../index.js";
  * @classdesc sound manager. singleton.
  * @memberof Managers
  */
-class SoundManager {
+export class SoundManager {
   static instance;
 
   /**
@@ -112,13 +112,17 @@ class SoundManager {
 
     this.sound = {
       ...this.selectedSound,
-      duration: loadedSound.duration(),
-      isReady: true,
       loaded: loadedSound,
+      duration: loadedSound.duration(),
     };
 
-    this.sound.loaded.setVolume(1);
-    this.sound.loaded.loop();
+    this.sound.isReady = true;
+
+    console.log(this.sound.isReady);
+    if (this.sound.isReady && this.sound.loaded) {
+      this.sound.loaded.setVolume(1);
+      this.sound.loaded.loop();
+    }
   };
 
   loop() {
@@ -128,10 +132,3 @@ class SoundManager {
     }
   }
 }
-
-/**
- * Create a single instance of the SoundManager
- * @type {SoundManager}
- */
-const soundManager = new SoundManager();
-export default soundManager;

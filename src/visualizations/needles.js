@@ -56,7 +56,7 @@ class Needles extends Visualization {
         const h = halfHeight - rGap * 1.5;
 
         //draw a rectangle at that location and size
-        p5.fill("#f0f2d2");
+        p5.fill(240);
         p5.rect(x, y, w, h);
 
         // draw ticks
