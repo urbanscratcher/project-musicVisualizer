@@ -1,9 +1,9 @@
 import { p5 } from "../../index.js";
 import soundManager from "../controllers/SoundManager.js";
 import visualManager from "../controllers/VisualisationManager.js";
-import PlayPrevButton from "./PlayPrevButton.js";
-import PlayNextButton from "./PlayNextButton.js";
 import PlayButton from "./PlayButton.js";
+import PlayNextButton from "./PlayNextButton.js";
+import PlayPrevButton from "./PlayPrevButton.js";
 import Playlist from "./Playlist.js";
 import PlaylistButton from "./PlaylistButton.js";
 import ProgressBar from "./ProgressBar.js";
@@ -28,6 +28,10 @@ class Player {
    * @returns {Player}
    */
   constructor() {
+    if (!Player.instance) {
+      Player.instance = this;
+    }
+
     // initialize ui elements
     this.playBackwardButton = new PlayPrevButton(
       this.x + 10,
@@ -61,9 +65,6 @@ class Player {
     this.playlist = new Playlist(this.x, this.y + this.height, this.width, 200);
     this.vislist = new Vislist(this.x, this.y + this.height, this.width, 200);
 
-    if (!Player.instance) {
-      Player.instance = this;
-    }
     return Player.instance;
   }
 

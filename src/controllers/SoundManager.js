@@ -32,11 +32,6 @@ class SoundManager {
   isReady = false;
 
   /**
-   * current volume
-   */
-  volumn = 1;
-
-  /**
    * Enforce singleton pattern
    * @returns {SoundManger}
    */
@@ -106,17 +101,23 @@ class SoundManager {
   };
 
   #onError = (err) => {
-    console.error("error - " + err);
+    console.error("error... " + err);
     this.sound.isReady = false;
   };
 
   #onSuccess = (loadedSound) => {
-    this.sound?.loaded && this.sound.loaded.stop();
-    this.sound = { ...this.selectedSound };
-    this.sound.loaded = loadedSound;
-    this.sound.duration = loadedSound.duration();
-    this.sound.loaded.setVolume(this.volume);
-    this.sound.isReady = true;
+    if (this.sound?.loaded) {
+      this.sound.loaded.stop();
+    }
+
+    const sound = {
+      ...this.selectedSound,
+      loaded: loadedSound,
+      duration: loadedSound.duration(),
+      isReady: true,
+    };
+    this.sound = sound;
+    this.sound.loaded.setVolume(1);
     this.sound.loaded.play();
   };
 }

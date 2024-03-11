@@ -59,7 +59,8 @@ class Playlist extends Button {
       }
     });
 
-    if (item) {
+    // if name is not the same as the current sound, proceed
+    if (item && soundManager.sound.name !== item.name) {
       soundManager.select(item.name);
       soundManager.loadSound();
     }

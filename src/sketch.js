@@ -19,8 +19,7 @@ import WavePattern from "./visualizations/Wavepattern.js";
  */
 export function sketch(p5) {
   p5.preload = function () {
-    // preloads a sound before setup
-
+    // preloads a sound before setup ------
     // add a list of sounds
     const sounds = [
       new Sound({
@@ -40,28 +39,9 @@ export function sketch(p5) {
       }),
     ];
 
-    // add sounds to the sound manager
-    soundManager.add(
-      new Sound({
-        src: "./assets/ditto.wav",
-        name: "ditto",
-        artist: "newjeans",
-      })
-    );
-    soundManager.add(
-      new Sound({
-        src: "./assets/hype.wav",
-        name: "hype boy",
-        artist: "newjeans",
-      })
-    );
-    soundManager.add(
-      new Sound({
-        src: "./assets/attention.wav",
-        name: "attention",
-        artist: "newjeans",
-      })
-    );
+    sounds.forEach((sound) => {
+      soundManager.add(sound);
+    });
 
     // select a sound to play
     soundManager.select("hype boy");
@@ -76,7 +56,6 @@ export function sketch(p5) {
 
     // add visualisations
     visualManager.add(new Dots());
-
     visualManager.add(new WavePattern());
     visualManager.add(new Spectrum());
     visualManager.add(new Needles());
