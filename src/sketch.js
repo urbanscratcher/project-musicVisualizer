@@ -23,21 +23,21 @@ export function sketch(p5) {
     // preloads a sound before setup -------------
     // add a list of sounds
     const sounds = [
-      new Sound({
-        src: "./assets/ditto.wav",
-        name: "ditto",
-        artist: "newjeans",
-      }),
-      new Sound({
-        src: "./assets/hype.wav",
-        name: "hype boy",
-        artist: "newjeans",
-      }),
-      new Sound({
-        src: "./assets/attention.wav",
-        name: "attention",
-        artist: "newjeans",
-      }),
+      // new Sound({
+      //   src: "./assets/ditto.wav",
+      //   name: "ditto",
+      //   artist: "newjeans",
+      // }),
+      // new Sound({
+      //   src: "./assets/hype.wav",
+      //   name: "hype boy",
+      //   artist: "newjeans",
+      // }),
+      // new Sound({
+      //   src: "./assets/attention.wav",
+      //   name: "attention",
+      //   artist: "newjeans",
+      // }),
       new Sound({
         src: "./assets/greatest hits.wav",
         name: "greatest hits",
@@ -51,7 +51,7 @@ export function sketch(p5) {
     });
 
     // select a sound to play
-    soundManager.select("ditto");
+    soundManager.select("greatest hits");
     soundManager.loadSound();
   };
 
