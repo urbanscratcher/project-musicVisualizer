@@ -38,6 +38,11 @@ export function sketch(p5) {
         name: "attention",
         artist: "newjeans",
       }),
+      new Sound({
+        src: "./assets/greatest hits.wav",
+        name: "greatest hits",
+        artist: "jockstrap",
+      }),
     ];
 
     // add sounds to the sound manager
@@ -57,15 +62,15 @@ export function sketch(p5) {
     p5.background(255);
 
     // add visualisations
-    visualManager.add(new SpectrumDots());
     visualManager.add(new Pixels());
-    visualManager.add(new Circular());
-    visualManager.add(new Blocks(this));
     visualManager.add(new BeatFireworks());
-    visualManager.add(new Needles());
-    visualManager.add(new Spectrum());
     visualManager.add(new WavePattern());
     visualManager.add(new RidgePlots(this));
+    visualManager.add(new Circular());
+    visualManager.add(new Blocks(this));
+    visualManager.add(new Needles());
+    visualManager.add(new Spectrum());
+    visualManager.add(new SpectrumDots());
   };
 
   p5.draw = function () {
