@@ -39,8 +39,8 @@ export function sketch(p5) {
       //   artist: "newjeans",
       // }),
       new Sound({
-        src: "./assets/greatest hits.wav",
-        name: "greatest hits",
+        src: "./assets/greatest_hits.mp4",
+        name: "greatest_hits",
         artist: "jockstrap",
       }),
     ];
@@ -51,7 +51,7 @@ export function sketch(p5) {
     });
 
     // select a sound to play
-    soundManager.select("greatest hits");
+    soundManager.select("greatest_hits");
     soundManager.loadSound();
   };
 
