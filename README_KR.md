@@ -16,7 +16,7 @@
 ## 기술적 중점 사항
 
 - 이 프로젝트는 복잡한 객체와 배열을 활용하여 고급 프로그래밍 기술을 적용하고, 시뮬레이션과 모션 코딩에 익숙해 지는 것을 목표로 했습니다.
-- p5.js DOM을 사용하여 사용자 인터페이스(UI)를 개선했습니다.
+- p5.DOM을 사용하여 사용자 인터페이스(UI)를 개선했습니다.
 - 객체 지향 프로그래밍 스타일로 코드를 작성했습니다.
 - 현대 자바스크립트(ES6, 비공개 변수, 클래스 등)를 구현했습니다.
 - ES6 모듈을 사용하기 위해 p5js의 인스턴스 모드를 활용했습니다.
@@ -33,7 +33,20 @@
 [사이트 바로가기](https://project-music-visualizer.netlify.app/)
 [jsdoc](https://project-music-visualizer.netlify.app/jsdoc/index.html)
 
+## 기술 구성
+### 프론트엔드
+- **라이브러리**: p5.js, p5.sound, p5.DOM
+- **언어**: JavaScript
+- **스타일링**: CSS
 
+### 백엔드
+- 없음
+
+### 개발 환경
+- **소스 코드**: GitHub
+
+## 클라우드 서비스 및 배포
+- **호스팅 및 배포**: Netlify
 
 ## 참고 자료
 - [프로젝트 아이디어 수집 - 핀터레스트](https://www.pinterest.co.kr/404joun/visualizer/)
