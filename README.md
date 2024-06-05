@@ -4,7 +4,7 @@
 
 This is a simple music visualization project created as one of my programming assignments. This site visualizes audio files in various ways using the Fourier transform function provided by the p5.js sound library. While some basic modules were written by the instructor as templates, I made slight modifications for better visualization and added new ideas.
 
-## Key Features
+## Features
 
 1. Waveform
 2. Spectrum
@@ -27,13 +27,13 @@ This is a simple music visualization project created as one of my programming as
 - `FFT.waveform()` returns an array of 1024 values between -1 and 1. Each value represents the amplitude of the sound over a small period of time.
 - `FFT.energy(freq1, [freq2])` returns the volume of the sound in the frequency range specified by the `freq1` and `freq2` parameters.
 
-## Demonstration
+## Demo
 <video src="https://github.com/urbanscratcher/project-musicVisualizer/assets/17016494/86d9e237-47e3-4a9b-b5aa-4fd2a2db52cd" controls></video>
 
 [Visit Site](https://project-music-visualizer.netlify.app/)
 [jsdoc](https://project-music-visualizer.netlify.app/jsdoc/index.html)
 
-## Technical Stack
+## Tech Stack
 ### Frontend
 - **Libraries**: p5.js, p5.sound, p5.DOM
 - **Language**: JavaScript
