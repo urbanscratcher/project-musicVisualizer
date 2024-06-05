@@ -5,13 +5,15 @@
 This is a simple music visualization project created as one of my programming assignments. This site visualizes audio files in various ways using the Fourier transform function provided by the p5.js sound library. While some basic modules were written by the instructor as templates, I made slight modifications for better visualization and added new ideas.
 
 ## Features
-
-1. Waveform
-2. Spectrum
-3. Needle
-4. Ridge Plot
-5. Blocks
-6. Beat Fireworks
+1. Noise Pixels (Original)
+2. Firework Beats
+3. Wave Pattern (Modified)
+4. Ridge Plot (Customization Added)
+5. Circlular (Original)
+6. Blocks
+7. Needle
+8. Spectrum (Modified)
+9. Spectrum Dots (Original)
 
 ## Technical Focus
 
